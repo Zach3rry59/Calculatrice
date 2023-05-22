@@ -6,32 +6,6 @@ let resultat = "";
 let calcul = "";
 let operateur = [];
 
-// btnsCalc.map((btn) => {
-//   btn.addEventListener("click", (e) => {
-//     switch (e.target.innerText) {
-//       case "C":
-//         displayCalc.innerText = "";
-//         resultCalc.innerText = "0";
-//         break;
-//       case "=":
-//         try {
-//           displayCalc.innerText = eval(displayCalc.innerText);
-//         } catch {
-//           displayCalc.innerText = "";
-//           resultCalc.innerText = "Error";
-//         }
-//         break;
-//       case "←":
-//         if (displayCalc.innerText) {
-//           displayCalc.innerText = displayCalc.innerText.slice(0, -1);
-//         }
-//         break;
-//       default:
-//         displayCalc.innerText += e.target.innerText;
-//         resultCalc.innerText = eval(displayCalc.innerText);
-//     }
-//   });
-// });
 
 btns.map((btn) => {
   btn.addEventListener('click', (e) => {
@@ -61,16 +35,15 @@ btns.map((btn) => {
 
 function mathematique(text, element){
   let etape = [];
-  let final = " ";
+  let final = "";
   checkOperateur(text);
   //TODO COde a vérifier
-  if(getOperateur(text) == "+" || getOperateur(text) == "-"){
-    console.log(text)
-    let resultat = eval(text)
-    setResultat(resultat);
-  }
+  // if(text.includes("+") || text.includes("-")){
+  //   let resultat = eval(text)
+  //   setResultat(resultat);
+  // }
 
-  else if(getOperateur(text) == "*")
+  if(getOperateur(text) == "*")
   {
     
     for(let i = 0; i< text.length; i++ ){
@@ -86,7 +59,8 @@ function mathematique(text, element){
     for(let z = 0; z < etape.length; z++){
       final += etape[z];
     }
-    setResultat(eval(final));
+    console.log((final))
+    setResultat((final));
   }
 }
 
@@ -95,7 +69,7 @@ function mathematique(text, element){
 
 
 function setDisplayText(text){
-  displayCalc.innerText += text;
+  displayCalc.innerText = text;
 }
 
 function removeDisplayText(){
@@ -110,21 +84,19 @@ function getDisplayText(){
 
 //#region Fonction du Resultat Text
 
-function setDisplayResultat(result){
-  resultCalc.innerText = resultat;
+function setResultCalc(text){
+  resultCalc.innerText = text;
 }
 
 function removeResultat(){
   resultCalc.innerText = ""
 }
-
-function setResultat(result){
-  resultat = result;
-}
-
 function getResultat(){
-  return resultat;
+  return resultCalc.innerText;
 }
+
+
+
 
 //#endregion
 
@@ -143,13 +115,12 @@ function checkOperateur(text){
 }
 
 function getOperateur(text){
-  let symbole = "";
+  let operateur = "";
   for (let i = 0; i < text.length; i++){
     if(text[i] == "+" || text[i] == "-" || text[i] == "*" || text[i] == "/"){
-      symbole = text[i];
+      operateur = text[i];
     }
   }
-  return symbole;
 }
 
 //#endregion
