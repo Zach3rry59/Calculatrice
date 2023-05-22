@@ -21,3 +21,8 @@ Il s'agit de réaliser une calculatrice en HTML/CSS JS
 ### FIN : 
 - Mercredi 31 mai
 - Présentation jeudi 1 juin
+
+# Équipe
+- [Arthur TONNOIR](https://github.com/Arthur-Tonnoir)
+- [Morgan FERLIN]()
+- [Nathan Lachery](https://github.com/Zach3rry59)
