@@ -25,7 +25,7 @@ btnsCalc.map((btn) => {
         if (displayCalc.innerText == "") {
           resultCalc.innerText = "";
         }
-        resultCalc.innerText = eval(displayCalc.innerText);
+        resultCalc.innerText = "= " + eval(displayCalc.innerText);
     }
   });
 });
