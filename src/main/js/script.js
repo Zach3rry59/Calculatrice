@@ -1,4 +1,32 @@
-let choix;
+
+let displayCalc = document.getElementById('display');
+let btnsCalc = Array.from(document.getElementsByClassName('button'));
+
+btnsCalc.map( btn => {
+  btn.addEventListener('click', (e) => {
+      switch(e.target.innerText){
+          case 'C':
+              displayCalc.innerText = '';
+              break;
+          case '=':
+              try{
+                  displayCalc.innerText = eval(displayCalc.innerText);
+              } catch {
+                  displayCalc.innerText = "Error"
+              }
+              break;
+          case '←':
+              if (displayCalc.innerText){
+                 displayCalc.innerText = displayCalc.innerText.slice(0, -1);
+              }
+              break;
+          default:
+              displayCalc.innerText += e.target.innerText;
+      }
+  });
+});
+
+/* let choix;
 let premierNombre;
 let deuxiemeNombre;
 do {
@@ -49,3 +77,4 @@ do {
   }
   alert("Le resultat est égal à " + resultat); // result is not defined  // j'avais oublié de mettre var resultat dans le switch
 }
+ */

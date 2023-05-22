@@ -22,7 +22,7 @@ Il s'agit de réaliser une calculatrice en HTML/CSS JS
 - Mercredi 31 mai
 - Présentation jeudi 1 juin
 
-## Équipe
+# Équipe
 - [Arthur TONNOIR](https://github.com/Arthur-Tonnoir)
 - [Morgan FERLIN](https://github.com/Shynen)
 - [Nathan Lachery](https://github.com/Zach3rry59)
