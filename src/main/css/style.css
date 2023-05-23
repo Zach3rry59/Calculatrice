@@ -1,9 +1,4 @@
-#allClear {
-  font-size: 25px;;
-}
-#percentageBtn {
-  font-size:25px;
-}
+
 .box {
   width:460px;
   height:765px;
@@ -22,7 +17,7 @@
 .button:hover {
   background-color: #c7c7c7;
   color: rgb(0, 0, 0);
-  transition: 0.2s ease-in-out;
+  transition: 0.1s ease-in-out;
 }
 .buttonOperator {
   color:#ffa500;
@@ -39,7 +34,7 @@
   .buttonOperator:hover {
   background-color: #5b5b5b;
   color: orange;
-  transition: 0.2s ease-in-out;
+  transition: 0.1s ease-in-out;
   }
 .buttons {
   display: grid;
@@ -51,11 +46,24 @@
   border-top: 1px solid #999898;
   border-right: 1px solid#999898;
 }
+.calculateImg {
+  filter :grayscale(100%)
+}
 .container {
   max-width: 400px;
   box-shadow: 0px 0px 43px 17px rgba(153, 153, 153, 1);
   margin-left:auto;
   margin-right:auto;
+}
+.divisionImg{
+  height:25px;
+}
+.swapImg {
+  height:41px;
+  margin-top:20px;
+}
+#allClear {
+  font-size: 25px;;
 }
 #display {
   text-align: right;
@@ -68,6 +76,10 @@
 }
 #divisionBtn {
   font-size: 34px;
+  background-color:white
+}
+#divisionBtn:hover {
+  background-color: #5b5b5b;
 }
 #equalBtn {
   background-color: rgb(81, 81, 217);
@@ -106,6 +118,9 @@
 #numberZero{
   font-weight: 600;
 }
+#percentageBtn {
+  font-size:25px;
+}
 #result {
   text-align: right;
   height: 70px;
@@ -115,7 +130,10 @@
   border: 4px ridge #c7c7c7;
   background-color: white;
 }
-.swapImg {
-  height:41px;
-  margin-top:20px;
+#swapMode {
+  background-color:white;
 }
+#swapMode:hover {
+  background-color: rgb(30, 167, 217);
+}
+
