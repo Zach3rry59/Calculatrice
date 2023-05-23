@@ -1,15 +1,110 @@
+#allClear {
+  font-size: 25px;;
+}
+#percentageBtn {
+  font-size:25px;
+}
+.box {
+  width:460px;
+  height:765px;
+  background-color:rgb(87, 69, 69);
+  border-radius: 1em;
+  margin: 10vh auto 0 auto;
+  padding-top:15px;
+}
+.button {
+  border: 1px solid #999898;
+  line-height: 100px;
+  text-align: center;
+  font-size: 25px;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: #c7c7c7;
+  color: rgb(0, 0, 0);
+  transition: 0.2s ease-in-out;
+}
+.buttonOperator {
+  color:#ffa500;
+  border-top: 1px solid #999;
+  border-right: 1px solid#999;
+  border: 1px solid #999898;
+  line-height: 100px;
+  text-align: center;
+  font-size: 25px;
+  cursor: pointer;
+  font-weight:400;
+  font-size: 34px;
+  }
+  .buttonOperator:hover {
+  background-color: #5b5b5b;
+  color: orange;
+  transition: 0.2s ease-in-out;
+  }
+.buttons {
+  display: grid;
+  border-bottom: 1px solid #999898;
+  border-left: 1px solid#999898;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.buttons > div {
+  border-top: 1px solid #999898;
+  border-right: 1px solid#999898;
+}
 .container {
   max-width: 400px;
-  margin: 10vh auto 0 auto;
   box-shadow: 0px 0px 43px 17px rgba(153, 153, 153, 1);
+  margin-left:auto;
+  margin-right:auto;
 }
-
 #display {
   text-align: right;
   height: 70px;
   line-height: 70px;
   padding: 16px 8px;
   font-size: 25px;
+  border: 4px ridge #c7c7c7;
+  background-color: white;
+}
+#divisionBtn {
+  font-size: 34px;
+}
+#equalBtn {
+  background-color: rgb(81, 81, 217);
+  color: white;
+}
+#equalBtn:hover {
+  background-color: rgba(48, 48, 106, 0.566);
+}
+#numberEight{
+  font-weight:600;
+}
+#numberFour{
+  font-weight:600;
+}
+#numberFive{
+  font-weight:600;
+}
+#numberNine{
+  font-weight:600;
+}
+#numberOne {
+  font-weight:600;
+}
+#numberSeven{
+  font-weight:600;
+}
+#numberSix{
+  font-weight:600;
+}
+#numberThree{
+  font-weight:600;
+}
+#numberTwo{
+  font-weight: 600;
+}
+#numberZero{
+  font-weight: 600;
 }
 #result {
   text-align: right;
@@ -17,35 +112,10 @@
   line-height: 70px;
   padding: 16px 8px;
   font-size: 25px;
+  border: 4px ridge #c7c7c7;
+  background-color: white;
 }
-
-.buttons {
-  display: grid;
-  border-bottom: 1px solid #999;
-  border-left: 1px solid#999;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-.buttons > div {
-  border-top: 1px solid #999;
-  border-right: 1px solid#999;
-}
-
-.button {
-  border: 0.5px solid #999;
-  line-height: 100px;
-  text-align: center;
-  font-size: 25px;
-  cursor: pointer;
-}
-
-#equal {
-  background-color: rgb(85, 85, 255);
-  color: white;
-}
-
-.button:hover {
-  background-color: #323330;
-  color: white;
-  transition: 0.5s ease-in-out;
+.swapImg {
+  height:41px;
+  margin-top:20px;
 }
