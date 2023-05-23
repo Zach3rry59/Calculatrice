@@ -3,9 +3,8 @@ let resultCalc = document.getElementById("result");
 let btns = Array.from(document.getElementsByClassName("button"));
 
 let resultat = "";
-let calcul = "";
+let calcule = "";
 let operateur = [];
-
 // btnsCalc.map((btn) => {
 //   btn.addEventListener("click", (e) => {
 //     switch (e.target.innerText) {
@@ -34,11 +33,12 @@ let operateur = [];
 // });
 
 btns.map((btn) => {
+
   btn.addEventListener('click', (e) => {
     switch (e.target.id){
       default:
         setDisplayText(e.target.value);
-        calcul += e.target.value;
+        calcule += e.target.value;
         break;
 
       case ("allClear"):
@@ -48,45 +48,45 @@ btns.map((btn) => {
         break;
 
       case ("equalBtn"):
-        mathematique(calcul, e);
+        mathematique(calcule, e);
         setDisplayResultat(getResultat())
         break; 
       
       case("clear"):
-      displayCalc.innerText = displayCalc.innerText.slice(0, -1);
+        displayCalc.innerText = displayCalc.innerText.slice(0, -1);
         break;
     }
   })
 })
 
 function mathematique(text, element){
-  let etape = [];
-  let final = " ";
-  checkOperateur(text);
-  //TODO COde a vérifier
-  if(getOperateur(text) == "+" || getOperateur(text) == "-"){
-    console.log(text)
-    let resultat = eval(text)
-    setResultat(resultat);
+  if(checkOperateur(text) == "+" || checkOperateur(text) == "-" || checkOperateur(text) == "*" ){
+    let result = eval(text);
+    setResultat(result);
   }
 
-  else if(getOperateur(text) == "*")
+  else if(checkOperateur(text) == "/"){
+
+  }
+
+  else if(checkOperateur(text) == "%")
   {
-    
+    let etape = [];
+    let final = "";
     for(let i = 0; i< text.length; i++ ){
-      
-      for(let y = 0; y <= operateur.length; y++){
-        
-        if(text[i] == operateur[y]){
-         etape.push("*");
+      for(let y = 0; y <= operateur.length-1; y++){
+        if(text[i] == operateur[y] && operateur[y] == "%"){
+         etape.push("*100");
         }
       }
-      etape.push(text[i])
+      if(text[i] != "%"){
+        etape.push(text[i])
+      }
     }
     for(let z = 0; z < etape.length; z++){
       final += etape[z];
     }
-    setResultat(eval(final));
+    setResultat(eval(final))
   }
 }
 
@@ -111,10 +111,11 @@ function getDisplayText(){
 //#region Fonction du Resultat Text
 
 function setDisplayResultat(result){
-  resultCalc.innerText = resultat;
+  resultCalc.innerText = result;
 }
 
 function removeResultat(){
+  resultat = ""
   resultCalc.innerText = ""
 }
 
@@ -130,23 +131,25 @@ function getResultat(){
 
 //#region Fonction Divers
 
+function removeAll(){
+  removeCalcule();
+  removeDisplayText();
+  removeResultat();
+}
+
 function removeCalcule(){
-  calcul = "";
+  calcule = "";
 }
 
 function checkOperateur(text){
-  for (let i = 0; i < text.length; i++){
-    if(text[i] == "+" || text[i] == "-" || text[i] == "*" || text[i] == "/"){
-      operateur.push(i);
-    }
-  }
-}
 
-function getOperateur(text){
   let symbole = "";
-  for (let i = 0; i < text.length; i++){
-    if(text[i] == "+" || text[i] == "-" || text[i] == "*" || text[i] == "/"){
+  operateur = []
+  for (let i = 0; i < text.length; i++)
+  {
+    if(text.substring(i, i+1) == "+" || text.substring(i, i+1) == "-" || text.substring(i, i+1) == "*" || text.substring(i, i+1) == "/" || text.substring(i, i+1) == "%"){
       symbole = text[i];
+      operateur.push(text[i]);
     }
   }
   return symbole;
