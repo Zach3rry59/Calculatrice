@@ -54,6 +54,7 @@ btns.map((btn) => {
       
       case("clear"):
         displayCalc.innerText = displayCalc.innerText.slice(0, -1);
+        calcule = calcule.slice(0, -1)
         break;
     }
   })
