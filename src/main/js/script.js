@@ -54,6 +54,7 @@ btns.map((btn) => {
       
       case("clear"):
         displayCalc.innerText = displayCalc.innerText.slice(0, -1);
+        calcule = calcule.slice(0, -1)
         break;
     }
   })
@@ -65,8 +66,22 @@ function mathematique(text, element){
     setResultat(result);
   }
 
-  else if(checkOperateur(text) == "/"){
-
+  else if(checkOperateur(text) == "/")
+  {
+    let check = false;
+    for(let i = 0; i< text.length; i++){
+      if(i-1 > 0){
+        if (text[i] == "0" && text[i-1] == "/" ){
+          check = true;
+        }
+      }
+    }
+    if (check){
+      setResultat("Erreur")
+    }else{
+      let result = eval(text);
+      setResultat(result);
+    }
   }
 
   else if(checkOperateur(text) == "%")
@@ -86,6 +101,7 @@ function mathematique(text, element){
     for(let z = 0; z < etape.length; z++){
       final += etape[z];
     }
+    console.log(final)
     setResultat(eval(final))
   }
 }
@@ -144,7 +160,7 @@ function removeCalcule(){
 function checkOperateur(text){
 
   let symbole = "";
-  operateur = []
+  operateur = [];
   for (let i = 0; i < text.length; i++)
   {
     if(text.substring(i, i+1) == "+" || text.substring(i, i+1) == "-" || text.substring(i, i+1) == "*" || text.substring(i, i+1) == "/" || text.substring(i, i+1) == "%"){
