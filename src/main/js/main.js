@@ -151,3 +151,4 @@ function checkDoubleOperateur(text, element){
   }
 
   //#endregion
+
