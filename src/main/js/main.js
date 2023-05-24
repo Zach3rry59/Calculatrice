@@ -13,8 +13,8 @@ btns.map((btn) => {
       switch (e.target.id){
         default:
             if(e.target.id != "equalBtn"){
-              if(!checkDoubleOperateur(calcule, e.target.value)){
-                let editText = checkDoubleDifferentOperateur(calcule, e.target.value);
+              if(!checkDoubleElement(calcule, e.target.value)){
+                let editText = checkDoubleOperateur(calcule, e.target.value);
                 setDisplayText(editText);
                 setCalcule(editText);
               }
@@ -111,16 +111,20 @@ function setDisplayText(text){
   //#region Fonction Divers
   
   /**
- * Vérifie si il a deux fois de suite un opérateur mathématique
- * @param {*} text le text a vérifier
+ * Vérifie si element est un opérateur (qui a déja était ajouter ou non) ou si il est un chiffre. 
+ * @param {*} calcul le calcul a vérifier
  * @param {*} element l'element a vérifier avant de l'ajouter au text 
- * @returns return false si il n'y a pas deux fois l'operateur, true si il y a deux fois l'opérateur
+ * @returns 
+ * Si true alors l'opérateur est le dernier caractere du calcul (calcule)
+ * Si flase :
+ * - Soit caractere est un chiffre mais element est un chiffre différent return false
+ * - Soit caractere et element sont le meme chiffre return false
  */
-function checkDoubleOperateur(text, element){
+function checkDoubleElement(calcul, element){
     let result = false;
     let caractere = "";
 
-    caractere = text.charAt(text.length-1);
+    caractere = calcul.charAt(text.length-1);
     if(caractere != element){
       result = false;
     }
@@ -139,7 +143,7 @@ function checkDoubleOperateur(text, element){
    * @param {*} element l'opérateur a vérifier est a ajouter ou a remplacer 
    * @returns le text final
    */
-  function checkDoubleDifferentOperateur(text, element){
+  function checkDoubleOperateur(text, element){
     let caractere = "";
     let newText = "";
 
