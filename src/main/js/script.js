@@ -5,40 +5,17 @@ let btns = Array.from(document.getElementsByClassName("button"));
 let resultat = "";
 let calcule = "";
 let operateur = [];
-// btnsCalc.map((btn) => {
-//   btn.addEventListener("click", (e) => {
-//     switch (e.target.innerText) {
-//       case "C":
-//         displayCalc.innerText = "";
-//         resultCalc.innerText = "0";
-//         break;
-//       case "=":
-//         try {
-//           displayCalc.innerText = eval(displayCalc.innerText);
-//         } catch {
-//           displayCalc.innerText = "";
-//           resultCalc.innerText = "Error";
-//         }
-//         break;
-//       case "←":
-//         if (displayCalc.innerText) {
-//           displayCalc.innerText = displayCalc.innerText.slice(0, -1);
-//         }
-//         break;
-//       default:
-//         displayCalc.innerText += e.target.innerText;
-//         resultCalc.innerText = eval(displayCalc.innerText);
-//     }
-//   });
-// });
 
 btns.map((btn) => {
 
   btn.addEventListener('click', (e) => {
     switch (e.target.id){
       default:
-        setDisplayText(e.target.value);
-        calcule += e.target.value;
+        if(!checkDoubleOperateur(calcule, e.target.value) && e.target.id != "equalBtn" ){
+          setDisplayText(e.target.value);
+          calcule += e.target.value;
+        }
+        
         break;
 
       case ("allClear"):
@@ -60,7 +37,12 @@ btns.map((btn) => {
   })
 })
 
-function mathematique(text, element){
+function mathematique(text, element)
+{
+  // let modifiyText = checkDoubleOperateur(text);
+  // removeDisplayText();
+  // setDisplayText(modifiyText);
+  
   if(checkOperateur(text) == "+" || checkOperateur(text) == "-" || checkOperateur(text) == "*" ){
     let result = eval(text);
     setResultat(result);
@@ -101,7 +83,6 @@ function mathematique(text, element){
     for(let z = 0; z < etape.length; z++){
       final += etape[z];
     }
-    console.log(final)
     setResultat(eval(final))
   }
 }
@@ -157,8 +138,8 @@ function removeCalcule(){
   calcule = "";
 }
 
-function checkOperateur(text){
-
+function checkOperateur(text)
+{
   let symbole = "";
   operateur = [];
   for (let i = 0; i < text.length; i++)
@@ -169,6 +150,29 @@ function checkOperateur(text){
     }
   }
   return symbole;
+}
+
+/**
+ * Vérifie si il a deux fois de suite un opérateur mathématique
+ * @param {*} text le text a vérifier
+ * @param {*} element l'element a vérifier avant de l'ajouter au text 
+ * @returns renvoie un text sans deux operateur a la suite
+ */
+function checkDoubleOperateur(text, element){
+  /**
+   * Le text Modifier final
+   */
+  let result = false;
+  
+  let caractere = "";
+  caractere = text.charAt(text.length-1);
+  if(caractere != element){
+    result = false;
+  }else{
+    result = true;
+  }
+  
+  return result;
 }
 
 //#endregion
