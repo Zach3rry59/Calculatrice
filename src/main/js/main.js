@@ -5,7 +5,7 @@ let btns = Array.from(document.getElementsByClassName("button"));
 let resultat = "";
 let calcule = "";
 
-let operateurs = ["+", "-", "*", "/", "%", "cos", "sin", "tan", "π", "deg", "2nd", "xY", "lg", "ln", "(", ")", "√x", "!", "1/x", "."]
+let operateurs = ["+", "-", "*", "/", "%", "cos", "sin", "tan", "π", "deg", "2nd", "xY", "lg", "ln", "√x", "!", "1/x", "."]
 
 btns.map((btn) => {
 
