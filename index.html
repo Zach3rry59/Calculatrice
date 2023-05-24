@@ -15,47 +15,46 @@
 					<div id="display"></div>
 					<div id="result"></div>
 					<div id="swapMode" class="buttons">
-						<input swap="sci" type="button" id="2ndBtn" class="buttonOperator button" value="2nd">
-						<input swap="sci" type="button" id="degRadBtn" class="buttonOperator button" value="deg">
-						<input swap="sci" type="button" id="sinBtn" class="buttonOperator button " value="sin">
-						<input swap="sci" type="button" id="sinBtn" class="buttonOperator button" value="cos">
-						<input swap="sci" type="button" id="tanBtn" class="buttonOperator button" value="tan">
-						<input swap="sci" type="button" id="exponentiationBtn" class="buttonOperator button" value="xY">
-						<input swap="sci" type="button" id="lgBtn" class="buttonOperator button" value="lg">
-						<input swap="sci" type="button" id="lnBtn" class="buttonOperator button" value="ln">
-						<input swap="sci" type="button" id="openParenthesisBtn" class="buttonOperator button" value="(">
-						<input swap="sci" type="button" id="closeParenthesisBtn" class="buttonOperator button" value=")">
-						<input swap="sci" type="button" id="racineSquareBtn" class="buttonOperator button" value="√x">
+						<input swap="sci" type="button" id="2ndBtn" class="buttonOperatorSci button" value="2nd">
+						<input swap="sci" type="button" id="degRadBtn" class="buttonOperatorSci button" value="deg">
+						<input swap="sci" type="button" id="sinBtn" class="buttonOperatorSci button" value="sin" onclick="getSin()" >
+						<input swap="sci" type="button" id="sinBtn" class="buttonOperatorSci button" value="cos" onclick="getCos()" >
+						<input swap="sci" type="button" id="tanBtn" class="buttonOperatorSci button" value="tan" onclick="getTan()" >
+						<input swap="sci" type="button" id="exponentiationBtn" class="buttonOperatorSci button" value="xY" onclick="getExponentiation()">
+						<input swap="sci" type="button" id="lgBtn" class="buttonOperatorSci button" value="lg" onclick="getLg()" >
+						<input swap="sci" type="button" id="lnBtn" class="buttonOperatorSci button" value="ln" onclick="getLn()" >
+						<input swap="sci" type="button" id="openParenthesisBtn" class="buttonOperatorSci button" value="(" onclick="getOpenParenthesis()" >
+						<input swap="sci" type="button" id="closeParenthesisBtn" class="buttonOperatorSci button" value=")" onclick="getCloseParenthesis()">
+						<input swap="sci" type="button" id="racineSquareBtn" class="buttonOperatorSci button" value="√x" onclick="getRacineSquare()">
 						<input type="button" id="allClear" class="buttonOperator button" value="AC">
 						<input type="button" id="clear" class="buttonOperator button" value="&larr;">
 						<input type="button" id="percentageBtn" class="buttonOperator button" value="%">
 						<input type="image" id="divisionBtn" class="buttonOperator button" value="/" src="src/main/img/division-2-25.png" class="divisionImg">
-						<input swap="sci" type="button" id="factorialBtn" class="buttonOperator button" value="!">
+						<input swap="sci" type="button" id="factorialBtn" class="buttonOperatorSci button" value="x!">
 						<input type="button" id="sevenBtn" class="button" value="7">
 						<input type="button" id="eightBtn" class="button" value="8">
 						<input type="button" id="nineBtn" class="button" value="9">
 						<input type="button" id="multiplyBtn" class="buttonOperator button" value="*">
-						<input swap="sci" type="button" id="negativeExponentiationBtn" class="buttonOperator button" value="1/x">
+						<input swap="sci" type="button" id="negativeExponentiationBtn" class="buttonOperatorSci button" value="1/x" onclick="getNegativeExponentiation()">
 						<input type="button" id="fourBtn" class="button" value="4">
 						<input type="button" id="fiveBtn" class="button" value="5">
 						<input type="button" id="sixBtn" class="button" value="6">
 						<input type="button" id="soustractBtn" class="buttonOperator button" value="-">
-						<input swap="sci" type="button" id="piBtn" class="buttonOperator button" value="π">
+						<input swap="sci" type="button" id="piBtn" class="buttonOperatorSci button" value="π" onclick="getPi()">
 						<input type="button" id="oneBtn" class="button" value="1">
 						<input type="button" id="twoBtn" class="button" value="2">
 						<input type="button" id="threeBtn" class="button" value="3">
 						<input type="button" id="addition" class="buttonOperator button" value="+">
-						<input type="image" id="swapMode" class="button" onclick="swap()" src="src/main/img/calculatrice.png">
-						<input swap="sci" type="button" id="eulersBtn" class="buttonOperator button" value="e">
+						<input type="image" id="swapModeBtn" class="button" src="src/main/img/calculatrice.png" onclick="swap()">
+						<input swap="sci" type="button" id="eulersBtn" class="buttonOperatorSci button" value="e" onclick="getEulers()">
 						<input type="button" id="zeroBtn" class="button" value="0">
 						<input type="button" id="dotBtn" class="button" value=".">
 						<input type="button" id="equalBtn" class="buttonOperator button" value="=">
 					</div>
 				</div>
 			</div>
-			<input type="button" id="cosBtn" class="button" value="cos" onclick="getCos()" >
 		</section>
-		<script src="src/main/js/script2.js"></script>
+		<script src="src/main/js/swapMode.js"></script>
 		<script src="src/main/js/scientifique.js"></script>
 		<script src="src/main/js/main.js"></script>
 	</body>
