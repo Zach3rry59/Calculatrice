@@ -37,12 +37,6 @@ btns.map((btn) => {
   })
 })
 
-function mathematique(text, element)
-{
-  // let modifiyText = checkDoubleOperateur(text);
-  // removeDisplayText();
-  // setDisplayText(modifiyText);
-  
   if(checkOperateur(text) == "+" || checkOperateur(text) == "-" || checkOperateur(text) == "*" ){
     let result = eval(text);
     setResultat(result);
@@ -85,6 +79,11 @@ function mathematique(text, element)
     }
     setResultat(eval(final))
   }
+
+  if(checkOperateur(text) == "cos"){
+    let valeur = text.replace("cos", Math.cos());
+    setResultat(valeur);
+}
 }
 
 
@@ -147,6 +146,10 @@ function checkOperateur(text)
     if(text.substring(i, i+1) == "+" || text.substring(i, i+1) == "-" || text.substring(i, i+1) == "*" || text.substring(i, i+1) == "/" || text.substring(i, i+1) == "%"){
       symbole = text[i];
       operateur.push(text[i]);
+    }
+    else if(text.substring(i, i+3) == "cos("){
+      symbole = (text[i] + text[i+1] + text[i+2]);
+      console.log(symbole)
     }
   }
   return symbole;

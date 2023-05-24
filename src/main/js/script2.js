@@ -95,9 +95,6 @@ function getResultat(){
   return resultCalc.innerText;
 }
 
-
-
-
 //#endregion
 
 //#region Fonction Divers
