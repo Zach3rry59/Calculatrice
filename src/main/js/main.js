@@ -5,17 +5,19 @@ let btns = Array.from(document.getElementsByClassName("button"));
 let resultat = "";
 let calcule = "";
 
+let operateurs = ["+", "-", "*", "/", "%", "cos", "sin", "tan", "π", "deg", "2nd", "xY", "lg", "ln", "(", ")", "√x", "!", "1/x"]
+
 btns.map((btn) => {
 
     btn.addEventListener('click', (e) => {
       switch (e.target.id){
         default:
             if(e.target.id != "equalBtn"){
-                if(!checkDoubleOperateur(calcule, e.target.value)){
-                    let editText = checkDoubleDifferentOperateur(calcule, e.target.value);
-                    setDisplayText(editText)
-                    setCalcule(editText)
-                }
+              if(!checkDoubleOperateur(calcule, e.target.value)){
+                let editText = checkDoubleDifferentOperateur(calcule, e.target.value);
+                setDisplayText(editText);
+                setCalcule(editText);
+              }
             }
             if(getResultat() == ""){
                 setDisplayResultat("");
@@ -95,6 +97,17 @@ function setDisplayText(text){
     calcule = "";
   }
 
+  //#region 
+  function checkOperateur(element){
+    let resultat = false;
+    for(let i = 0; i< operateurs.length; i++){
+      if(operateurs[i] == element){
+        resultat = true;
+      }
+    }
+    return resultat;
+  }
+
   //#region Fonction Divers
   
   /**
@@ -107,13 +120,19 @@ function checkDoubleOperateur(text, element){
     let result = false;
     let caractere = "";
 
-    caractere = text.charAt(text.length-1);
-    if(caractere != element){
-      result = false;
-    }
-    else{
+    if(element == " "){
       result = true;
     }
+    caractere = text.charAt(text.length-1);
+    if(!checkOperateur(element)){
+      if(caractere != element){
+        result = false;
+      }
+      else{
+        result = true;
+      }
+    }
+    
     return result;
   }
 
@@ -143,10 +162,14 @@ function checkDoubleOperateur(text, element){
         newText = text.replace(caractere, "*");
     }
 
+    else if(checkOperateur(caractere) && checkOperateur(element)){
+      newText = text;
+    }
+
     else{
         newText = text + element
     }
-    
+
     return newText;
   }
 
