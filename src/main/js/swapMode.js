@@ -3,7 +3,6 @@ function swap() {
   const box = document.getElementById("box");
   const container = document.getElementById("container");
   const buttonsSci = document.querySelectorAll('input[swap="sci"]');
-  console.log(buttonsSci);
   if (swapMode.className == "buttonsSci") {
     swapMode.className = "buttons";
     box.className = "box";

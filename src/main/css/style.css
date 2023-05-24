@@ -2,7 +2,7 @@
 .box {
   width:460px;
   height:765px;
-  background-color:rgb(87, 69, 69);
+  background-color:#EFEFEF;
   border-radius: 1em;
   margin: 10vh auto 0 auto;
   padding-top:15px;
@@ -10,13 +10,13 @@
 .boxSci {
   width:560px;
   height:973px;
-  background-color:rgb(87, 69, 69);
+  background-color:#EFEFEF;
   border-radius: 1em;
   margin: 10vh auto 0 auto;
   padding-top:15px;
 }
 .button {
-  border: 1px solid #999898;
+  border: 1px solid #EFEFEF;
   background-color:#EFEFEF;
   line-height: 100px;
   text-align: center;
@@ -25,14 +25,12 @@
 }
 .button:hover {
   background-color: #c7c7c7;
-  color: rgb(0, 0, 0);
+  border-radius: 50px;
   transition: 0.1s ease-in-out;
 }
 .buttonOperator {
   color:#ffa500;
-  border-top: 1px solid #999;
-  border-right: 1px solid#999;
-  border: 1px solid #999898;
+  border: 1px solid #EFEFEF;
   line-height: 100px;
   text-align: center;
   font-size: 25px;
@@ -40,39 +38,37 @@
   font-weight:400;
   font-size: 34px;
   }
-  .buttonOperator:hover {
-  background-color: #5b5b5b;
-  color: orange;
-  transition: 0.1s ease-in-out;
-  }
 .buttons {
   display: grid;
-  border-bottom: 1px solid #999898;
-  border-left: 1px solid#999898;
+  border: 1px solid #999898;
+  border-bottom-right-radius: 26px;
+  border-bottom-left-radius: 26px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 input[swap="sci"]{
   display: none;
 }
+
+.buttonOperatorSci {
+  color: #999898;
+}
 .buttonsSci {
   display: grid;
-  border-bottom: 1px solid #999898;
-  border-left: 1px solid#999898;
+  border: 1px solid #999898;
+  border-bottom-right-radius: 26px;
+  border-bottom-left-radius: 26px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
-.buttons > div {
-  border-top: 1px solid #999898;
-  border-right: 1px solid#999898;
-}
+
 .container {
   max-width: 400px;
-  box-shadow: 0px 0px 43px 17px rgba(153, 153, 153, 1);
+  border-radius: 25px;
   margin-left:auto;
   margin-right:auto;
 }
 .containerSci {
   max-width: 500px;
-  box-shadow: 0px 0px 43px 17px rgba(153, 153, 153, 1);
+  border-radius: 25px;
   margin-left:auto;
   margin-right:auto;
 }
@@ -92,21 +88,20 @@ input[swap="sci"]{
   line-height: 70px;
   padding: 16px 8px;
   font-size: 25px;
-  border: 4px ridge #c7c7c7;
+  border-top-right-radius: 26px;
+  border-top-left-radius: 26px;
   background-color: white;
 }
 #divisionBtn {
   font-size: 34px;
 }
-#divisionBtn:hover {
-  background-color: #5b5b5b;
-}
 #equalBtn {
-  background-color: rgb(81, 81, 217);
+  border-radius: 50px;
+  background-color: #f36d00;
   color: white;
 }
 #equalBtn:hover {
-  background-color: rgba(48, 48, 106, 0.566);
+  background-color: #d46000;
 }
 #numberEight{
   font-weight:600;
@@ -147,11 +142,9 @@ input[swap="sci"]{
   line-height: 70px;
   padding: 16px 8px;
   font-size: 25px;
-  border: 4px ridge #c7c7c7;
   background-color: white;
 }
-#swapMode:hover {
-  background-image: url("src/main/img/calculatrice2.png");
-/* Essayer de faire passer en blanc en l'icone sur le hover */
+#swapModeBtn {
+  border-radius: 50px;
 }
 
