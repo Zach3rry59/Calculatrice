@@ -124,7 +124,7 @@ function checkDoubleElement(calcul, element){
     let result = false;
     let caractere = "";
 
-    caractere = calcul.charAt(text.length-1);
+    caractere = calcul.charAt(calcul.length-1);
     if(caractere != element){
       result = false;
     }
