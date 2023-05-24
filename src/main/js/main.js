@@ -120,19 +120,16 @@ function checkDoubleOperateur(text, element){
     let result = false;
     let caractere = "";
 
-    if(element == " "){
+    caractere = text.charAt(text.length-1);
+    if(caractere != element){
+      result = false;
+    }
+    else if(caractere == element && !checkOperateur(element)){
+      return false;
+    }
+    else{
       result = true;
     }
-    caractere = text.charAt(text.length-1);
-    if(!checkOperateur(element)){
-      if(caractere != element){
-        result = false;
-      }
-      else{
-        result = true;
-      }
-    }
-    
     return result;
   }
 
@@ -147,7 +144,6 @@ function checkDoubleOperateur(text, element){
     let newText = "";
 
     caractere = text.charAt(text.length-1);
-
     //Opérateur Standart
     if(caractere == "+" && element == "-"){
         newText = text.replace(caractere, "-");
@@ -169,7 +165,6 @@ function checkDoubleOperateur(text, element){
     else{
         newText = text + element
     }
-
     return newText;
   }
 
