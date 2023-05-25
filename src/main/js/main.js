@@ -33,6 +33,9 @@ btns.map((btn) => {
         setCalcule(getResultat());
         break;
 
+      case "scndBtn" :
+        second();
+        break;
       case "clear":
         displayCalc.innerText = displayCalc.innerText.slice(0, -1);
         calcule = calcule.slice(0, -1);
