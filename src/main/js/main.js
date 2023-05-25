@@ -1,52 +1,45 @@
-let displayCalc = document.getElementById('display');
+let displayCalc = document.getElementById("display");
 let resultCalc = document.getElementById("result");
 let btns = Array.from(document.getElementsByClassName("button"));
 
 let resultat = "";
 let calcule = "";
-
 let operateurs = ["+", "-", "*", "/", "%", "π", "xY", "lg", "ln", "√x", "!", "."]
 let operateursSizeTwo = [ "xY", "lg", "ln", "√x"];
 let operateursSizeThree = ["cos", "sin", "tan", "deg", "2nd", "1/x"];
 
+
 btns.map((btn) => {
+  btn.addEventListener("click", (e) => {
+    switch (e.target.id) {
+      default:
+        if (!checkDoubleElement(getCalcule(), e.target.value)) {
+          let editText = checkDoubleOperateur(getCalcule(), e.target.value);
+          setDisplayText(editText);
+          setCalcule(editText);
+        }
+        calcul(getCalcule())
+        setDisplayResultat(getResultat())
+        break;
 
-    btn.addEventListener('click', (e) => {
-      switch (e.target.id){
-        default:
-            if(e.target.id != "equalBtn"){
-              if(!checkDoubleElement(calcule, e.target.value)){
-                let editText = checkDoubleOperateur(calcule, e.target.value);
-                setDisplayText(editText);
-                setCalcule(editText);
-              }
-            }
-            if(getResultat() == ""){
-                setDisplayResultat("");
-            }else {
-                setDisplayResultat(getResultat());
-            }
-            break;
-  
-        case ("allClear"):
-          removeDisplayText();
-          removeCalcule();
-          removeResultat();
-          break;
-  
-        case ("equalBtn"):
-          setDisplayResultat(getResultat());
-          break; 
-        
-        case("clear"):
-          displayCalc.innerText = displayCalc.innerText.slice(0, -1);
-          calcule = calcule.slice(0, -1)
-          break;
-      }
-    })
-  })
+      case "allClear":
+        removeDisplayText();
+        removeCalcule();
+        removeResultat();
+        break;
 
+      case "equalBtn":
+        setDisplayText(getResultat());
+        setCalcule(getResultat());
+        break;
 
+      case "clear":
+        displayCalc.innerText = displayCalc.innerText.slice(0, -1);
+        calcule = calcule.slice(0, -1);
+        break;
+    }
+  });
+});
   //#region Fonction du Display Text (Écran de la calculatrice)
 
 
@@ -82,22 +75,72 @@ function setDisplayText(text){
   function getResultat(){
     return resultat;
   }
-  
-  //#endregion 
 
-  //#region Fonction Calcule
+  //#endregion
 
-  function setCalcule(calcul){
-    calcule = calcul;
+//#region Fonction du Display Text (Écran de la calculatrice)
+
+function setDisplayText(text) {
+  displayCalc.innerText = text;
+}
+
+function removeDisplayText() {
+  displayCalc.innerText = "";
+}
+
+function getDisplayText() {
+  return displayCalc.innerText;
+}
+
+//#endregion
+
+//#region Fonction du Resultat Text
+
+function setDisplayResultat(result) {
+  resultCalc.innerText = result;
+}
+
+function removeResultat() {
+  resultat = "";
+  resultCalc.innerText = "";
+}
+
+function setResultat(result) {
+  resultat = result;
+}
+
+function getResultat() {
+  return resultat;
+}
+
+//#endregion
+
+//#region Fonction Calcule
+
+function setCalcule(calcul) {
+  calcule = calcul;
+}
+
+function getCalcule() {
+  return calcule;
+}
+
+function removeCalcule() {
+  calcule = "";
+}
+
+function calcul(number) {
+  if (checkOperateur(number.charAt(number.length - 1))) {
+    number = number.slice(0, -1);
+    setResultat("" + eval(number));
+  } else {
+    setResultat("" + eval(number));
   }
+}
 
-  function getCalcule(){
-    return calcule;
-  }
 
-  function removeCalcule(){
-    calcule = "";
-  }
+//#endregion
+
 
   //#region Fonction Operateur
 
@@ -134,8 +177,6 @@ function setDisplayText(text){
     
     return size;
   }
-
-  //#region Fonction Divers
 
   String.prototype.sliceReplace = function(start, end, repl) {
     return this.substring(0, start) + repl + this.substring(end);
@@ -212,4 +253,4 @@ function checkDoubleElement(calcul, element){
     return newText;
   }
 
-  //#endregion
+//#endregion
