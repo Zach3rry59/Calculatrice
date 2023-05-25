@@ -34,8 +34,16 @@ btns.map((btn) => {
         break;
 
       case "clear":
-        displayCalc.innerText = displayCalc.innerText.slice(0, -1);
-        calcule = calcule.slice(0, -1);
+        if(checkOperateur(getDisplayText().substring(getDisplayText().length-2, getDisplayText().length))){
+          setDisplayText(getDisplayText().slice(0, -2));
+          setCalcule(getCalcule().slice(0, -2));
+        }else if(checkOperateur(getDisplayText().substring(getDisplayText().length-3, getDisplayText().length))){
+          setDisplayText(getDisplayText().slice(0, -3));
+          setCalcule(getCalcule().slice(0, -3));
+        }else{
+          setDisplayText(getDisplayText().slice(0, -1));
+          setCalcule(getCalcule().slice(0, -1));
+        }
         break;
     }
   });
