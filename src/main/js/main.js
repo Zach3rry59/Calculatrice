@@ -5,7 +5,9 @@ let btns = Array.from(document.getElementsByClassName("button"));
 let resultat = "";
 let calcule = "";
 
-let operateurs = ["+", "-", "*", "/", "%", "cos", "sin", "tan", "π", "deg", "2nd", "xY", "lg", "ln", "(", ")", "√x", "!", "1/x"]
+let operateurs = ["+", "-", "*", "/", "%", "π", "xY", "lg", "ln", "√x", "!", "."]
+let operateursSizeTwo = [ "xY", "lg", "ln", "√x"];
+let operateursSizeThree = ["cos", "sin", "tan", "deg", "2nd", "1/x"];
 
 btns.map((btn) => {
 
@@ -13,8 +15,8 @@ btns.map((btn) => {
       switch (e.target.id){
         default:
             if(e.target.id != "equalBtn"){
-              if(!checkDoubleOperateur(calcule, e.target.value)){
-                let editText = checkDoubleDifferentOperateur(calcule, e.target.value);
+              if(!checkDoubleElement(calcule, e.target.value)){
+                let editText = checkDoubleOperateur(calcule, e.target.value);
                 setDisplayText(editText);
                 setCalcule(editText);
               }
@@ -97,30 +99,64 @@ function setDisplayText(text){
     calcule = "";
   }
 
-  //#region 
+  //#region Fonction Operateur
+
   function checkOperateur(element){
     let resultat = false;
     for(let i = 0; i< operateurs.length; i++){
-      if(operateurs[i] == element){
+      if(operateurs[i] == element && checkSizeOperateur(element) == 1){
+        resultat = true;
+      }
+    }
+    for(let i = 0; i< operateursSizeTwo.length; i++){
+      if(operateursSizeTwo[i] == element && checkSizeOperateur(element) == 2){
+        resultat = true;
+      }
+    }
+    for(let i = 0; i< operateursSizeThree.length; i++){
+      if(operateursSizeThree[i] == element && checkSizeOperateur(element) == 3){
         resultat = true;
       }
     }
     return resultat;
   }
 
+  function checkSizeOperateur(element){
+    let size;
+    if(element.length == 1){
+      size = 1;
+    }else if(element.length == 2){
+      size = 2;
+    }
+    else if(element.length == 3){
+      size =  3;
+    }
+    
+    return size;
+  }
+
   //#region Fonction Divers
+
+  String.prototype.sliceReplace = function(start, end, repl) {
+    return this.substring(0, start) + repl + this.substring(end);
+  };
+
   
   /**
- * Vérifie si il a deux fois de suite un opérateur mathématique
- * @param {*} text le text a vérifier
+ * Vérifie si element est un opérateur (qui a déja était ajouter ou non) ou si il est un chiffre. 
+ * @param {*} calcul le calcul a vérifier
  * @param {*} element l'element a vérifier avant de l'ajouter au text 
- * @returns return false si il n'y a pas deux fois l'operateur, true si il y a deux fois l'opérateur
+ * @returns 
+ * Si true alors l'opérateur est le dernier caractere du calcul (calcule)
+ * Si flase :
+ * - Soit caractere est un chiffre mais element est un chiffre différent return false
+ * - Soit caractere et element sont le meme chiffre return false
  */
-function checkDoubleOperateur(text, element){
+function checkDoubleElement(calcul, element){
     let result = false;
     let caractere = "";
 
-    caractere = text.charAt(text.length-1);
+    caractere = calcul.charAt(calcul.length-1);
     if(caractere != element){
       result = false;
     }
@@ -139,29 +175,37 @@ function checkDoubleOperateur(text, element){
    * @param {*} element l'opérateur a vérifier est a ajouter ou a remplacer 
    * @returns le text final
    */
-  function checkDoubleDifferentOperateur(text, element){
+  function checkDoubleOperateur(text, element){
     let caractere = "";
     let newText = "";
+    let sizeOperateur;
 
-    caractere = text.charAt(text.length-1);
-    //Opérateur Standart
-    if(caractere == "+" && element == "-"){
-        newText = text.replace(caractere, "-");
+    for(let i = 0; i<4; i++){
+        if(i == 1){
+          if(checkOperateur(text.charAt(text.length-i, text.length))){
+            caractere = text.charAt(text.length-i, text.length);
+            sizeOperateur = i;
+          }
+        }
+        if(checkOperateur(text.substring(text.length-i, text.length))){
+          caractere = text.substring(text.length-i, text.length);
+          sizeOperateur = i;
+        }
     }
-    else if(caractere == "-" && element == "+"){
-        newText = text.replace(caractere, "+");
+    if(checkOperateur(caractere) && checkOperateur(element)){
+      if(caractere != element){
+        if(sizeOperateur == 1)
+        {
+          newText = text.sliceReplace(text.length-1, text.length, element);
+        }
+        else if(sizeOperateur == 2){
+          newText = text.sliceReplace(text.length-2, text.length, element);
+        }
+        else if(sizeOperateur == 3){
+          newText = text.sliceReplace(text.length-3, text.length, element);
+        }
+      }
     }
-    else if(caractere == "*" && element == "/"){
-        newText = text.replace(caractere, "/");
-    }
-    else if(caractere == "/" && element == "*"){
-        newText = text.replace(caractere, "*");
-    }
-
-    else if(checkOperateur(caractere) && checkOperateur(element)){
-      newText = text;
-    }
-
     else{
         newText = text + element
     }
