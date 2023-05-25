@@ -130,12 +130,12 @@ function removeCalcule() {
 }
 
 function calcul(number) {
-  if (checkOperateur(number.charAt(number.length - 1))) {
+/*   if (checkOperateur(number.charAt(number.length - 1))) {
     number = number.slice(0, -1);
     setResultat("" + eval(number));
   } else {
     setResultat("" + eval(number));
-  }
+  } */
 }
 
 
@@ -255,6 +255,7 @@ function checkDoubleElement(calcul, element){
 
 //#endregion
 
+// #Passage calculatrice Scientifique / standard
 function swap() {
   const swapMode = document.getElementById("swapMode");
   const box = document.getElementById("box");
@@ -273,6 +274,24 @@ function swap() {
     container.className = "containerSci";
     buttonsSci.forEach((button) => {
       button.style.display = "grid";
+    });
+  }
+}
+
+// fais passer le cosinus / sinus / tangente avec le 2nd  et l'enleve en repassage
+
+function second() { 
+  const scndBtn = document.getElementById("scndBtn");
+  const buttonsSec = document.querySelectorAll('input[second="sec"]');
+  if (scndBtn.className == "buttonsSec") {
+    scndBtn.className = "buttons";
+    buttonsSec.forEach((button) => {
+    button.value =button.value.substring(1)
+    });
+  } else {
+    scndBtn.className = "buttonsSec";
+    buttonsSec.forEach((button) => {
+    button.value = "a" + button.value
     });
   }
 }
