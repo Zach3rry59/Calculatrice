@@ -2,11 +2,9 @@ let displayCalc = document.getElementById("display");
 let resultCalc = document.getElementById("result");
 let btns = Array.from(document.getElementsByClassName("button"));
 
-let resultat = "";
+let resultat = "0";
 let calcule = "";
-let tbl = "";
-let tbl2 = false;
-const MathOp = "+Math.";
+let tbl = false;
 let operateurs = [
   "+",
   "-",
@@ -28,44 +26,44 @@ btns.map((btn) => {
   btn.addEventListener("click", (e) => {
     switch (e.target.id) {
       default:
-        if (!checkDoubleElement(getCalcule(), e.target.value)) {
-          let editText = checkDoubleOperateur(getCalcule(), e.target.value);
+        if (!checkDoubleElement(getDisplayText(), e.target.value)) {
+          let editText = checkDoubleOperateur(getDisplayText(), e.target.value);
           setDisplayText(editText);
           setCalcule(editText);
-          if (tbl2 != "") {
-            tbl2 += editText.charAt(editText.length - 1);
+          setCalcule(getCalcule().split(" "));
+
+          if (getCalcule()[1]) {
+            setDisplayText(getDisplayText() + "(");
+            setDisplayText(getDisplayText().replace(" ", ""));
           }
         }
-        tbl = getCalcule();
-        tbl = tbl.split(" ");
-        if (
-          tbl[tbl.length - 1] == "cos" ||
-          tbl[tbl.length - 1] == "sin" ||
-          tbl[tbl.length - 1] == "tan"
-        ) {
-          setCalcule(getCalcule() + "(");
-          setDisplayText(getCalcule());
-          for (let i = 1; i < tbl.length; i++) {
-            tbl[i] = MathOp.concat("", tbl[i] + "(");
-            console.log(tbl);
-          }
-          tbl = tbl.join("");
-          tbl2 = tbl;
-        }
-        if (typeof tbl2 === "string") {
-          calcul(tbl2);
+        setCalcule(getCalcule().join(""));
+        let ParceQueAvecGetCalculeSaBug = getCalcule();
+        ParceQueAvecGetCalculeSaBug = replacer(ParceQueAvecGetCalculeSaBug);
+        calcul(ParceQueAvecGetCalculeSaBug);
+        if (getResultat() == "Infinity") {
+          setResultat("Erreur");
+          setDisplayResultat(getResultat());
+        } else if (getResultat() == "NaN") {
+          setResultat(" ");
+          setDisplayResultat(getResultat());
+        } else if (getResultat().includes("function")) {
+          setResultat(" ");
           setDisplayResultat(getResultat());
         } else {
-          calcul(getCalcule());
           setDisplayResultat(getResultat());
         }
+        setDisplayResultat(getResultat());
+        break;
+
+      case "swapModeBtn":
+        swap();
         break;
 
       case "allClear":
         removeDisplayText();
         removeCalcule();
         removeResultat();
-        tbl2 = false;
         break;
 
       case "equalBtn":
@@ -74,13 +72,38 @@ btns.map((btn) => {
         break;
 
       case "clear":
-        displayCalc.innerText = displayCalc.innerText.slice(0, -1);
-        calcule = calcule.slice(0, -1);
-        tbl2 = tbl2.slice(0, -1);
+        setDisplayText(getDisplayText().slice(0, -1));
+        setCalcule(getCalcule().slice(0, -1));
         break;
     }
   });
 });
+
+/**
+ * The function replaces certain mathematical expressions in a string with their corresponding Math
+ * library functions.
+ * @param str - The input string that needs to be modified by replacing certain mathematical functions
+ * and constants with their corresponding JavaScript Math object methods.
+ * @returns The function `replacer` returns a modified string where certain mathematical functions and
+ * constants have been replaced with their corresponding JavaScript Math object methods or properties.
+ */
+function replacer(str) {
+  var pairs = {
+    cos: "+Math.cos",
+    sin: "+Math.sin",
+    tan: "+Math.tan",
+    lg: "+Math.log10",
+    ln: "+Math.log",
+    π: "+Math.PI",
+    e: "+Math.E",
+    '√':"+Math.sqrt"
+  };
+  Object.keys(pairs).forEach(function (key) {
+    str = str.split(key).join(pairs[key]);
+  });
+  return str;
+}
+
 //#region Fonction du Display Text (Écran de la calculatrice)
 
 function setDisplayText(text) {
@@ -104,8 +127,8 @@ function setDisplayResultat(result) {
 }
 
 function removeResultat() {
-  resultat = "";
-  resultCalc.innerText = "";
+  resultat = "0";
+  resultCalc.innerText = "0";
 }
 
 function setResultat(result) {
