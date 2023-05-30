@@ -38,9 +38,9 @@ btns.map((btn) => {
           }
         }
         setCalcule(getCalcule().join(""));
-        let ParceQueAvecGetCalculeSaBug = getCalcule();
-        ParceQueAvecGetCalculeSaBug = replacer(ParceQueAvecGetCalculeSaBug);
-        calcul(ParceQueAvecGetCalculeSaBug);
+        let getCalculeHack = getCalcule();
+        getCalculeHack = replacer(getCalculeHack);
+        calcul(getCalculeHack);
         if (getResultat() == "Infinity") {
           setResultat("Erreur");
           setDisplayResultat(getResultat());
