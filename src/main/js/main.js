@@ -384,6 +384,27 @@ function second() {
   }
 }
 
-function percentage(){
+// A finir 
+function percentage() {
+  let tabTest = [];
+  for(let valeurs of getDisplayText()) { // prend l'input et le met dans un tableau
+      if (valeurs != '+' && valeurs != '/' && valeurs != '*' && valeurs != '-') {
+        tabTest.push(valeurs.split(','));
+      } 
+        console.log("tabtest ::: " , tabTest)            
+  }
+}
 
+
+function xY() {
+  let table = []; // initialise tab
+  for(let valeurs of getDisplayText()) { // pour chaque valeur dans le display
+    table.push(valeurs); // push les valeur dans le tab
+    Number.valeurs; // transforme le string en number
+  }
+  let valeur1 = table[0]; // initialise les deux var
+  let valeur2 = table[1]; //
+  if (valeur1 != 0 && valeur2 != 0) { // les deux variables ne peuvent etre nulles étant des puissances
+    setDisplayResultat(Math.pow(valeur1,valeur2)); // affiche le resultat xY
+  }
 }
