@@ -408,3 +408,29 @@ function xY() {
     setDisplayResultat(Math.pow(valeur1,valeur2)); // affiche le resultat xY
   }
 }
+
+function xY() {
+  let table = []; // initialise tab
+  for(let valeurs of getDisplayText()) { // pour chaque valeur dans le display
+    table.push(valeurs); // push les valeur dans le tab
+    Number.valeurs; // transforme le string en number
+  }
+  let valeur1 = table[0]; // initialise les deux var
+  let valeur2 = table[1]; //
+  if (valeur1 != 0 && valeur2 != 0) { // les deux variables ne peuvent etre nulles étant des puissances
+    setDisplayResultat(Math.pow(valeur1,valeur2)); // affiche le resultat xY
+  }
+}
+
+// FONCTIONNE mais a modif pour ne pas afficher le 1/x lors du clique
+function onX() { 
+  let table = []; // initialise tab
+  for(let valeurs of getDisplayText()) { // pour chaque valeur dans le display
+    table.push(valeurs); // push les valeur dans le tab
+    Number.valeurs; // transforme le string en number
+  }
+  let valeur1 = table[0]; // initialise la variable
+  if (valeur1 != 0 ) { // la variable ne peut etre nul ( division)
+    setDisplayResultat(1/valeur1); // affiche le resultat 
+  }
+}
