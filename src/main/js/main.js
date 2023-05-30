@@ -2,24 +2,62 @@ let displayCalc = document.getElementById("display");
 let resultCalc = document.getElementById("result");
 let btns = Array.from(document.getElementsByClassName("button"));
 
-let resultat = "";
+let resultat = "0";
 let calcule = "";
-let operateurs = ["+", "-", "*", "/", "%", "π", "xY", "lg", "ln", "√x", "!", "."]
-let operateursSizeTwo = [ "xY", "lg", "ln", "√x"];
+let tbl = false;
+let operateurs = [
+  "+",
+  "-",
+  "*",
+  "/",
+  "%",
+  "π",
+  "xY",
+  "lg",
+  "ln",
+  "√x",
+  "!",
+  ".",
+];
+let operateursSizeTwo = ["xY", "lg", "ln", "√x"];
 let operateursSizeThree = ["cos", "sin", "tan", "deg", "2nd", "1/x"];
-
 
 btns.map((btn) => {
   btn.addEventListener("click", (e) => {
     switch (e.target.id) {
       default:
-        if (!checkDoubleElement(getCalcule(), e.target.value)) {
-          let editText = checkDoubleOperateur(getCalcule(), e.target.value);
+        if (!checkDoubleElement(getDisplayText(), e.target.value)) {
+          let editText = checkDoubleOperateur(getDisplayText(), e.target.value);
           setDisplayText(editText);
           setCalcule(editText);
+          setCalcule(getCalcule().split(" "));
+
+          if (getCalcule()[1]) {
+            setDisplayText(getDisplayText() + "(");
+            setDisplayText(getDisplayText().replace(" ", ""));
+          }
         }
-        calcul(getCalcule())
-        setDisplayResultat(getResultat())
+        setCalcule(getCalcule().join(""));
+        let getCalculeHack = getCalcule();
+        getCalculeHack = replacer(getCalculeHack);
+        calcul(getCalculeHack);
+        if (getResultat() == "Infinity") {
+          setResultat("Erreur");
+          setDisplayResultat(getResultat());
+        } else if (getResultat() == "NaN") {
+          setResultat(" ");
+          setDisplayResultat(getResultat());
+        } else if (getResultat().includes("function")) {
+          setResultat(" ");
+          setDisplayResultat(getResultat());
+        } else {
+          setDisplayResultat(getResultat());
+        }
+        setDisplayResultat(getResultat());
+        break;
+
+      case "swapModeBtn":
+        swap();
         break;
 
       case "allClear":
@@ -49,39 +87,63 @@ btns.map((btn) => {
   });
 });
 
+/**
+ * The function replaces certain mathematical expressions in a string with their corresponding Math
+ * library functions.
+ * @param str - The input string that needs to be modified by replacing certain mathematical functions
+ * and constants with their corresponding JavaScript Math object methods.
+ * @returns The function `replacer` returns a modified string where certain mathematical functions and
+ * constants have been replaced with their corresponding JavaScript Math object methods or properties.
+ */
+function replacer(str) {
+  var pairs = {
+    cos: "+Math.cos",
+    sin: "+Math.sin",
+    tan: "+Math.tan",
+    lg: "+Math.log10",
+    ln: "+Math.log",
+    π: "+Math.PI",
+    e: "+Math.E",
+    '√':"+Math.sqrt"
+  };
+  Object.keys(pairs).forEach(function (key) {
+    str = str.split(key).join(pairs[key]);
+  });
+  return str;
+}
+
 //#region Fonction du Display Text (Écran de la calculatrice)
 
-function setDisplayText(text){
+function setDisplayText(text) {
   displayCalc.innerText = text;
 }
 
-function removeDisplayText(){
+function removeDisplayText() {
   displayCalc.innerText = "";
 }
 
-function getDisplayText(){
+function getDisplayText() {
   return displayCalc.innerText;
 }
 
 //#endregion
 
-
 //#region Fonction du Resultat Text
 
-function setDisplayResultat(result){
+function setDisplayResultat(result) {
   resultCalc.innerText = result;
 }
 
-function removeResultat(){
-  resultat = ""
-  resultCalc.innerText = ""
+function removeResultat() {
+  resultat = "0";
+  resultCalc.innerText = "0";
 }
 
-function setResultat(result){
+function setResultat(result) {
   resultat = result;
 }
 
-function getResultat(){
+function getResultat() {
   return resultat;
 }
 
@@ -139,64 +201,71 @@ function removeCalcule() {
 }
 
 function calcul(number) {
-  if (checkOperateur(number.charAt(number.length - 1))) {
-    number = number.slice(0, -1);
-    setResultat("" + eval(number));
+  if (number.length == 1) {
+    if (checkOperateur(number.charAt(0))) {
+      test = number.charAt(0);
+      if (test == "*" || test == "/") {
+        setDisplayText("");
+      } else {
+        number = number.slice(0, -1);
+      }
+    }
   } else {
-    setResultat("" + eval(number));
+    if (checkOperateur(number.charAt(number.length - 1))) {
+      number = number.slice(0, -1);
+      setResultat("" + eval(number));
+    } else {
+      setResultat("" + eval(number));
+    }
   }
 }
 
-
 //#endregion
-
 
 //#region Fonction Operateur
 
-function checkOperateur(element){
+function checkOperateur(element) {
   let resultat = false;
-  for(let i = 0; i< operateurs.length; i++){
-    if(operateurs[i] == element && checkSizeOperateur(element) == 1){
+  for (let i = 0; i < operateurs.length; i++) {
+    if (operateurs[i] == element && checkSizeOperateur(element) == 1) {
       resultat = true;
     }
   }
-  for(let i = 0; i< operateursSizeTwo.length; i++){
-    if(operateursSizeTwo[i] == element && checkSizeOperateur(element) == 2){
+  for (let i = 0; i < operateursSizeTwo.length; i++) {
+    if (operateursSizeTwo[i] == element && checkSizeOperateur(element) == 2) {
       resultat = true;
     }
   }
-  for(let i = 0; i< operateursSizeThree.length; i++){
-    if(operateursSizeThree[i] == element && checkSizeOperateur(element) == 3){
+  for (let i = 0; i < operateursSizeThree.length; i++) {
+    if (operateursSizeThree[i] == element && checkSizeOperateur(element) == 3) {
       resultat = true;
     }
   }
   return resultat;
 }
 
-function checkSizeOperateur(element){
+
+function checkSizeOperateur(element) {
   let size;
-  if(element.length == 1){
+  if (element.length == 1) {
     size = 1;
-  }else if(element.length == 2){
+  } else if (element.length == 2) {
     size = 2;
+  } else if (element.length == 3) {
+    size = 3;
   }
-  else if(element.length == 3){
-    size =  3;
-  }
-  
   return size;
 }
 
-String.prototype.sliceReplace = function(start, end, repl) {
+String.prototype.sliceReplace = function (start, end, repl) {
   return this.substring(0, start) + repl + this.substring(end);
 };
 
-  
 /**
- * Vérifie si element est un opérateur (qui a déja était ajouter ou non) ou si il est un chiffre. 
+ * Vérifie si element est un opérateur (qui a déja était ajouter ou non) ou si il est un chiffre.
  * @param {*} calcul le calcul a vérifier
- * @param {*} element l'element a vérifier avant de l'ajouter au text 
- * @returns 
+ * @param {*} element l'element a vérifier avant de l'ajouter au text
+ * @returns
  * Si true alors l'opérateur est le dernier caractere du calcul (calcule)
  * Si flase :
  * - Soit caractere est un chiffre mais element est un chiffre différent return false
@@ -264,6 +333,7 @@ function checkDoubleOperateur(text, element){
   else{
       newText = text + element
   }
+
   return newText;
 }
 
