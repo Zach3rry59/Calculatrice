@@ -107,7 +107,8 @@ function replacer(str) {
     ln: "+Math.log",
     π: "+Math.PI",
     e: "+Math.E",
-    '√':"+Math.sqrt"
+    '√':"+Math.sqrt",
+    '%':"/100"
   };
   Object.keys(pairs).forEach(function (key) {
     str = str.split(key).join(pairs[key]);
@@ -381,4 +382,8 @@ function second() {
     button.value = "a" + button.value
     });
   }
+}
+
+function percentage(){
+
 }
