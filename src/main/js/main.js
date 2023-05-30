@@ -5,20 +5,7 @@ let btns = Array.from(document.getElementsByClassName("button"));
 let resultat = "0";
 let calcule = "";
 let tbl = false;
-let operateurs = [
-  "+",
-  "-",
-  "*",
-  "/",
-  "%",
-  "π",
-  "xY",
-  "lg",
-  "ln",
-  "√x",
-  "!",
-  ".",
-];
+let operateurs = ["+", "-", "*", "/", "%", "xY", "lg", "ln", "√x", "!", "."];
 let operateursSizeTwo = ["xY", "lg", "ln", "√x"];
 let operateursSizeThree = ["cos", "sin", "tan", "deg", "2nd", "1/x"];
 
@@ -26,6 +13,7 @@ btns.map((btn) => {
   btn.addEventListener("click", (e) => {
     switch (e.target.id) {
       default:
+        const scndBtn = document.getElementById("scndBtn");
         if (!checkDoubleElement(getDisplayText(), e.target.value)) {
           let editText = checkDoubleOperateur(getDisplayText(), e.target.value);
           setDisplayText(editText);
@@ -36,24 +24,57 @@ btns.map((btn) => {
             setDisplayText(getDisplayText() + "(");
             setDisplayText(getDisplayText().replace(" ", ""));
           }
+          setCalcule(getCalcule().join(""));
         }
-        setCalcule(getCalcule().join(""));
-        let getCalculeHack = getCalcule();
-        getCalculeHack = replacer(getCalculeHack);
-        calcul(getCalculeHack);
-        if (getResultat() == "Infinity") {
-          setResultat("Erreur");
-          setDisplayResultat(getResultat());
-        } else if (getResultat() == "NaN") {
-          setResultat(" ");
-          setDisplayResultat(getResultat());
-        } else if (getResultat().includes("function")) {
-          setResultat(" ");
-          setDisplayResultat(getResultat());
-        } else {
-          setDisplayResultat(getResultat());
+        try {
+          setResultat("" + calcul(addOperator(replacer(getCalcule()))));
+          if (getResultat() == "Infinity") {
+            setResultat("Impossible de diviser par 0");
+            setDisplayResultat(getResultat());
+          } else if (scndBtn.classList.contains("buttonsSec") && getResultat() === "NaN"){
+            setResultat("Erreur");
+            setDisplayResultat(getResultat());
+          } else if (getResultat() == "NaN") {
+            setResultat(" ");
+            setDisplayResultat(getResultat());
+          } else if (getResultat().includes("function")) {
+            setResultat(" ");
+            setDisplayResultat(getResultat());
+          } else if (getResultat() == "undefined") {
+            setResultat("Erreur");
+            setDisplayResultat(getResultat());
+          }  else {
+            setDisplayResultat(getResultat());
+          }
+        } catch (error) {
+          errorStr = "" + error;
+          if (errorStr.includes(")")) {
+            setCalcule(getCalcule() + ")");
+          }
+          try {
+            setResultat("" + calcul(addOperator(replacer(getCalcule()))));
+            if (getResultat() == "Infinity") {
+              setResultat("Impossible de diviser par 0");
+              setDisplayResultat(getResultat());
+            } else if (scndBtn.classList.contains("buttonsSec") && getResultat() === "NaN"){
+              setResultat("Erreur");
+              setDisplayResultat(getResultat());
+            } else if (getResultat() == "NaN") {
+              setResultat(" ");
+              setDisplayResultat(getResultat());
+            } else if (getResultat().includes("function")) {
+              setResultat(" ");
+              setDisplayResultat(getResultat());
+            } else if (getResultat() == "undefined") {
+              setResultat("Erreur");
+              setDisplayResultat(getResultat());
+            }  else {
+              setDisplayResultat(getResultat());
+            }
+          } catch (error) {
+            console.log("Ceci n'est pas une erreur");
+          }
         }
-        setDisplayResultat(getResultat());
         break;
 
       case "swapModeBtn":
@@ -71,17 +92,31 @@ btns.map((btn) => {
         setCalcule(getResultat());
         break;
 
-      case "scndBtn" :
+      case "scndBtn":
         second();
         break;
       case "clear":
-        if(checkOperateur(getDisplayText().substring(getDisplayText().length-2, getDisplayText().length))){
+        if (
+          checkOperateur(
+            getDisplayText().substring(
+              getDisplayText().length - 2,
+              getDisplayText().length
+            )
+          )
+        ) {
           setDisplayText(getDisplayText().slice(0, -2));
           setCalcule(getCalcule().slice(0, -2));
-        }else if(checkOperateur(getDisplayText().substring(getDisplayText().length-3, getDisplayText().length))){
+        } else if (
+          checkOperateur(
+            getDisplayText().substring(
+              getDisplayText().length - 3,
+              getDisplayText().length
+            )
+          )
+        ) {
           setDisplayText(getDisplayText().slice(0, -3));
           setCalcule(getCalcule().slice(0, -3));
-        }else{
+        } else {
           setDisplayText(getDisplayText().slice(0, -1));
           setCalcule(getCalcule().slice(0, -1));
         }
@@ -89,6 +124,20 @@ btns.map((btn) => {
     }
   });
 });
+
+function addOperator(str) {
+  let strArray = str.split("");
+  const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ")"];
+  for (const number of numbers) {
+    for (let i = 0; i < strArray.length; i++) {
+      if (strArray[i] === "M" && strArray[i - 1] === number) {
+        strArray[i] = "*M";
+        str = strArray.join('')
+      }
+    }
+  }
+  return str
+}
 
 /**
  * The function replaces certain mathematical expressions in a string with their corresponding Math
@@ -99,20 +148,56 @@ btns.map((btn) => {
  * constants have been replaced with their corresponding JavaScript Math object methods or properties.
  */
 function replacer(str) {
-  var pairs = {
-    cos: "+Math.cos",
-    sin: "+Math.sin",
-    tan: "+Math.tan",
-    lg: "+Math.log10",
-    ln: "+Math.log",
-    π: "+Math.PI",
-    e: "+Math.E",
-    '√':"+Math.sqrt"
-  };
+  const scndBtn = document.getElementById("scndBtn");
+  if (scndBtn.classList.contains("buttonsSec")) {
+    var pairs = {
+      acos: "Math.acos",
+      asin: "Math.asin",
+      atan: "Math.atan",
+      lg: "Math.log10",
+      ln: "Math.log",
+      π: "Math.PI",
+      e: "Math.E",
+      "√": "Math.sqrt",
+    };
+  } else
+    var pairs = {
+      cos: "Math.cos",
+      sin: "Math.sin",
+      tan: "Math.tan",
+      lg: "Math.log10",
+      ln: "Math.log",
+      π: "Math.PI",
+      e: "Math.E",
+      "√": "Math.sqrt",
+    };
+
   Object.keys(pairs).forEach(function (key) {
     str = str.split(key).join(pairs[key]);
   });
   return str;
+}
+
+function calcul(number) {
+  let resultat = "";
+  if (number.length == 1) {
+    if (checkOperateur(number.charAt(0))) {
+      test = number.charAt(0);
+      if (test == "*" || test == "/") {
+        setDisplayText("");
+      } else {
+        number = number.slice(0, -1);
+      }
+    }
+  } else {
+    if (checkOperateur(number.charAt(number.length - 1))) {
+      number = number.slice(0, -1);
+      resultat = eval(number);
+    } else {
+      resultat = eval(number);
+    }
+  }
+  return resultat;
 }
 
 //#region Fonction du Display Text (Écran de la calculatrice)
@@ -203,26 +288,6 @@ function removeCalcule() {
   calcule = "";
 }
 
-function calcul(number) {
-  if (number.length == 1) {
-    if (checkOperateur(number.charAt(0))) {
-      test = number.charAt(0);
-      if (test == "*" || test == "/") {
-        setDisplayText("");
-      } else {
-        number = number.slice(0, -1);
-      }
-    }
-  } else {
-    if (checkOperateur(number.charAt(number.length - 1))) {
-      number = number.slice(0, -1);
-      setResultat("" + eval(number));
-    } else {
-      setResultat("" + eval(number));
-    }
-  }
-}
-
 //#endregion
 
 //#region Fonction Operateur
@@ -246,7 +311,6 @@ function checkOperateur(element) {
   }
   return resultat;
 }
-
 
 function checkSizeOperateur(element) {
   let size;
@@ -274,18 +338,16 @@ String.prototype.sliceReplace = function (start, end, repl) {
  * - Soit caractere est un chiffre mais element est un chiffre différent return false
  * - Soit caractere et element sont le meme chiffre return false
  */
-function checkDoubleElement(calcul, element){
+function checkDoubleElement(calcul, element) {
   let result = false;
   let caractere = "";
 
-  caractere = calcul.charAt(calcul.length-1);
-  if(caractere != element){
+  caractere = calcul.charAt(calcul.length - 1);
+  if (caractere != element) {
     result = false;
-  }
-  else if(caractere == element && !checkOperateur(element)){
+  } else if (caractere == element && !checkOperateur(element)) {
     return false;
-  }
-  else{
+  } else {
     result = true;
   }
   return result;
@@ -293,48 +355,43 @@ function checkDoubleElement(calcul, element){
 
 /**
  * Vérifie si il y a deux opérateur différent et le remplace par son contraire exemple : 9+- = 9-
- * @param {*} text le text a vérifer et a modifier 
- * @param {*} element l'opérateur a vérifier est a ajouter ou a remplacer 
+ * @param {*} text le text a vérifer et a modifier
+ * @param {*} element l'opérateur a vérifier est a ajouter ou a remplacer
  * @returns le text final
  */
-function checkDoubleOperateur(text, element){
+function checkDoubleOperateur(text, element) {
   let caractere = "";
   let newText = "";
   let sizeOperateur;
 
-  for(let i = 0; i<4; i++){
-      if(i == 1){
-        if(checkOperateur(text.charAt(text.length-i, text.length))){
-          caractere = text.charAt(text.length-i, text.length);
-          sizeOperateur = i;
-        }
-      }
-      if(checkOperateur(text.substring(text.length-i, text.length))){
-        caractere = text.substring(text.length-i, text.length);
+  for (let i = 0; i < 4; i++) {
+    if (i == 1) {
+      if (checkOperateur(text.charAt(text.length - i, text.length))) {
+        caractere = text.charAt(text.length - i, text.length);
         sizeOperateur = i;
       }
-  }
-  if(checkOperateur(caractere) && checkOperateur(element)){
-    if(caractere != element){
-      if(sizeOperateur == 1)
-      {
-        if(checkSizeOperateur(element) == 1){
-          newText = text.sliceReplace(text.length-1, text.length, element);
-        }else{
-          newText = text + element ;
-        }
-        
-      }
-      else if(sizeOperateur == 2){
-        newText = text.sliceReplace(text.length-2, text.length, element);
-      }
-      else if(sizeOperateur == 3){
-        newText = text.sliceReplace(text.length-3, text.length, element);
-      }
+    }
+    if (checkOperateur(text.substring(text.length - i, text.length))) {
+      caractere = text.substring(text.length - i, text.length);
+      sizeOperateur = i;
     }
   }
-  else{
-      newText = text + element
+  if (checkOperateur(caractere) && checkOperateur(element)) {
+    if (caractere != element) {
+      if (sizeOperateur == 1) {
+        if (checkSizeOperateur(element) == 1) {
+          newText = text.sliceReplace(text.length - 1, text.length, element);
+        } else {
+          newText = text + element;
+        }
+      } else if (sizeOperateur == 2) {
+        newText = text.sliceReplace(text.length - 2, text.length, element);
+      } else if (sizeOperateur == 3) {
+        newText = text.sliceReplace(text.length - 3, text.length, element);
+      }
+    }
+  } else {
+    newText = text + element;
   }
 
   return newText;
@@ -367,18 +424,29 @@ function swap() {
 
 // fais passer le cosinus / sinus / tangente avec le 2nd  et l'enleve en repassage
 
-function second() { 
+function second() {
   const scndBtn = document.getElementById("scndBtn");
   const buttonsSec = document.querySelectorAll('input[second="sec"]');
-  if (scndBtn.className == "buttonsSec") {
-    scndBtn.className = "buttons";
+  if (scndBtn.classList.contains("buttonsSec")) {
+    scndBtn.classList.add("buttons");
+    scndBtn.classList.remove("buttonsSec");
     buttonsSec.forEach((button) => {
-    button.value =button.value.substring(1)
+      button.value = button.value.substring(1);
     });
   } else {
-    scndBtn.className = "buttonsSec";
+    scndBtn.classList.add("buttonsSec");
+    scndBtn.classList.remove("buttons");
     buttonsSec.forEach((button) => {
-    button.value = "a" + button.value
+      button.value = "a" + button.value;
     });
+  }
+}
+
+function swapRadDeg() {
+  const radDegBtn = document.getElementById("degRadBtn");
+  if (radDegBtn.value == "rad") {
+    radDegBtn.value = "deg";
+  } else {
+    radDegBtn.value = "rad";
   }
 }
