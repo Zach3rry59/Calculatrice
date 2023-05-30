@@ -49,6 +49,25 @@
 input[swap="sci"]{
   display: none;
 }
+input[second="sec"]{
+  font-weight: 600;
+}
+#scndBtn.buttons {
+  font-size:25px;
+  color:gray;
+}
+.buttonsSec {
+  font-weight:600;
+  font-size: 24px;
+  font-family: cursive;
+  display: grid;
+  border: 1px solid #999898;
+  border-bottom-right-radius: 26px;
+  border-bottom-left-radius: 26px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  color:black;
+}
+
 
 .buttonOperatorSci {
   color: #999898;
