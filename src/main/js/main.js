@@ -72,8 +72,16 @@ btns.map((btn) => {
         break;
 
       case "clear":
-        setDisplayText(getDisplayText().slice(0, -1));
-        setCalcule(getCalcule().slice(0, -1));
+        if(checkOperateur(getDisplayText().substring(getDisplayText().length-2, getDisplayText().length))){
+          setDisplayText(getDisplayText().slice(0, -2));
+          setCalcule(getCalcule().slice(0, -2));
+        }else if(checkOperateur(getDisplayText().substring(getDisplayText().length-3, getDisplayText().length))){
+          setDisplayText(getDisplayText().slice(0, -3));
+          setCalcule(getCalcule().slice(0, -3));
+        }else{
+          setDisplayText(getDisplayText().slice(0, -1));
+          setCalcule(getCalcule().slice(0, -1));
+        }
         break;
     }
   });
@@ -236,6 +244,7 @@ function checkOperateur(element) {
   return resultat;
 }
 
+
 function checkSizeOperateur(element) {
   let size;
   if (element.length == 1) {
@@ -245,7 +254,6 @@ function checkSizeOperateur(element) {
   } else if (element.length == 3) {
     size = 3;
   }
-
   return size;
 }
 
@@ -263,16 +271,18 @@ String.prototype.sliceReplace = function (start, end, repl) {
  * - Soit caractere est un chiffre mais element est un chiffre différent return false
  * - Soit caractere et element sont le meme chiffre return false
  */
-function checkDoubleElement(calcul, element) {
+function checkDoubleElement(calcul, element){
   let result = false;
   let caractere = "";
 
-  caractere = calcul.charAt(calcul.length - 1);
-  if (caractere != element) {
+  caractere = calcul.charAt(calcul.length-1);
+  if(caractere != element){
     result = false;
-  } else if (caractere == element && !checkOperateur(element)) {
+  }
+  else if(caractere == element && !checkOperateur(element)){
     return false;
-  } else {
+  }
+  else{
     result = true;
   }
   return result;
@@ -280,40 +290,50 @@ function checkDoubleElement(calcul, element) {
 
 /**
  * Vérifie si il y a deux opérateur différent et le remplace par son contraire exemple : 9+- = 9-
- * @param {*} text le text a vérifer et a modifier
- * @param {*} element l'opérateur a vérifier est a ajouter ou a remplacer
+ * @param {*} text le text a vérifer et a modifier 
+ * @param {*} element l'opérateur a vérifier est a ajouter ou a remplacer 
  * @returns le text final
  */
-function checkDoubleOperateur(text, element) {
+function checkDoubleOperateur(text, element){
   let caractere = "";
   let newText = "";
   let sizeOperateur;
 
-  for (let i = 0; i < 4; i++) {
-    if (i == 1) {
-      if (checkOperateur(text.charAt(text.length - i, text.length))) {
-        caractere = text.charAt(text.length - i, text.length);
+  for(let i = 0; i<4; i++){
+      if(i == 1){
+        if(checkOperateur(text.charAt(text.length-i, text.length))){
+          caractere = text.charAt(text.length-i, text.length);
+          sizeOperateur = i;
+        }
+      }
+      if(checkOperateur(text.substring(text.length-i, text.length))){
+        caractere = text.substring(text.length-i, text.length);
         sizeOperateur = i;
       }
-    }
-    if (checkOperateur(text.substring(text.length - i, text.length))) {
-      caractere = text.substring(text.length - i, text.length);
-      sizeOperateur = i;
-    }
   }
-  if (checkOperateur(caractere) && checkOperateur(element)) {
-    if (caractere != element) {
-      if (sizeOperateur == 1) {
-        newText = text.sliceReplace(text.length - 1, text.length, element);
-      } else if (sizeOperateur == 2) {
-        newText = text.sliceReplace(text.length - 2, text.length, element);
-      } else if (sizeOperateur == 3) {
-        newText = text.sliceReplace(text.length - 3, text.length, element);
+  if(checkOperateur(caractere) && checkOperateur(element)){
+    if(caractere != element){
+      if(sizeOperateur == 1)
+      {
+        if(checkSizeOperateur(element) == 1){
+          newText = text.sliceReplace(text.length-1, text.length, element);
+        }else{
+          newText = text + element ;
+        }
+        
+      }
+      else if(sizeOperateur == 2){
+        newText = text.sliceReplace(text.length-2, text.length, element);
+      }
+      else if(sizeOperateur == 3){
+        newText = text.sliceReplace(text.length-3, text.length, element);
       }
     }
-  } else {
-    newText = text + element;
   }
+  else{
+      newText = text + element
+  }
+
   return newText;
 }
 
