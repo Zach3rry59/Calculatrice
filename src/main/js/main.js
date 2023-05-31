@@ -91,7 +91,9 @@ btns.map((btn) => {
         setDisplayText(getResultat());
         setCalcule(getResultat());
         break;
-
+      case "percentageBtn":
+        percentage();
+        break;
       case "scndBtn":
         second();
         break;
@@ -341,8 +343,12 @@ String.prototype.sliceReplace = function (start, end, repl) {
 function checkDoubleElement(calcul, element) {
   let result = false;
   let caractere = "";
-
-  caractere = calcul.charAt(calcul.length - 1);
+  if(calcul.length-1 > 0){
+    caractere = calcul.charAt(calcul.length - 1);
+  }else{
+    caractere = calcul[0];
+  }
+  
   if (caractere != element) {
     result = false;
   } else if (caractere == element && !checkOperateur(element)) {
@@ -444,13 +450,33 @@ function second() {
 
 // A finir 
 function percentage() {
+  let size = 0;
   let tabTest = [];
   for(let valeurs of getDisplayText()) { // prend l'input et le met dans un tableau
-      if (valeurs != '+' && valeurs != '/' && valeurs != '*' && valeurs != '-') {
-        tabTest.push(valeurs.split(','));
-      } 
-        console.log("tabtest ::: " , tabTest)            
+    Number.valeurs;
+    if(!checkOperateur(valeurs) || valeurs == ".") // Vérifie si valeurs n'est pas un opérateur sauf si il est égale a .
+    {
+      if(tabTest[size] != null){ // Si la ligne d'une tableau n'est pas null
+        if(valeurs != "."){ // Si valeurs est différent de . 
+          tabTest[size] += parseInt(valeurs.split(',')); // Ajoute sur la ligne valeurs (qui est un chiffre)
+        }else{ //Sinon valeur est égale a .
+          tabTest[size] = (tabTest[size] + "."); // Ajoute sur la ligne . 
+        }
+        
+      }else{ //Sinon ajoute le chiffre
+        tabTest[size] = (valeurs.split(','));
+      }
+    }
+    else{ // Si c'est un opérateur, l'ajoute dans le tableau sur une autre ligne
+      size+=1 // Ajoute plus 1 a size
+      tabTest[size] = (valeurs.split(',')) // Ajoute l'opérateur
+      size+=1;// Ajoute plus 1 a size
+    }
+    Number.valeurs;
   }
+
+  let result =  eval((tabTest[0]) + tabTest[1] + ((tabTest[0])*((tabTest[2])/100))); // Cacule le resultat
+  setDisplayResultat(result); // set le display resultat
 }
 
 function xY() {
