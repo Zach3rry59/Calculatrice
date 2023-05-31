@@ -171,7 +171,15 @@ btns.map((btn) => {
           try {
             fun();
           } catch (error) {
-            console.log("aucune erreur rajoute une parenthèse");
+            errorStr = "" + error;
+            if (errorStr.includes(")")) {
+              setCalcule(getCalcule() + ")");
+            }
+            try {
+              fun();
+            } catch (error) {
+              console.log("aucune erreur rajoute une parenthèse");
+            }
           }
         }
         break;
@@ -278,6 +286,10 @@ function addOperator(str) {
   return str;
 }
 
+function dTrig(trigFunc, angle) {
+  return trigFunc((angle * Math.PI) / 180);
+}
+
 /**
  * The function replaces certain mathematical expressions in a string with their corresponding Math
  * library functions.
@@ -287,7 +299,7 @@ function addOperator(str) {
  * constants have been replaced with their corresponding JavaScript Math object methods or properties.
  */
 function replacer(str) {
-  const scndBtn = document.getElementById("scndBtn");
+  const degRadBtn = document.getElementById("degRadBtn");
   if (scndBtn.classList.contains("buttonsSec")) {
     var pairs = {
       acos: "Math.acos",
@@ -299,7 +311,21 @@ function replacer(str) {
       e: "Math.E",
       "√": "Math.sqrt",
     };
-  } else
+  } else if (
+    !scndBtn.classList.contains("buttonsSec") &&
+    degRadBtn.value == "deg"
+  ) {
+    var pairs = {
+      cos: "dTrig(Math.cos,",
+      sin: "dTrig(Math.sin,",
+      tan: "dTrig(Math.tan,",
+      lg: "Math.log10",
+      ln: "Math.log",
+      π: "Math.PI",
+      e: "Math.E",
+      "√": "Math.sqrt",
+    };
+  } else {
     var pairs = {
       cos: "Math.cos",
       sin: "Math.sin",
@@ -310,6 +336,7 @@ function replacer(str) {
       e: "Math.E",
       "√": "Math.sqrt",
     };
+  }
 
   Object.keys(pairs).forEach(function (key) {
     str = str.split(key).join(pairs[key]);
