@@ -448,7 +448,6 @@ function second() {
   }
 }
 
-// A finir 
 function percentage() {
   let size = 0;
   let tabTest = [];
