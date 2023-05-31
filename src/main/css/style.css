@@ -1,0 +1,170 @@
+
+.box {
+  width:460px;
+  height:765px;
+  background-color:#EFEFEF;
+  border-radius: 1em;
+  margin: 10vh auto 0 auto;
+  padding-top:15px;
+}
+.boxSci {
+  width:560px;
+  height:973px;
+  background-color:#EFEFEF;
+  border-radius: 1em;
+  margin: 10vh auto 0 auto;
+  padding-top:15px;
+}
+.button, .buttonSpe {
+  border: 1px solid #EFEFEF;
+  background-color:#EFEFEF;
+  line-height: 100px;
+  text-align: center;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.button:hover, .buttonSpe:hover {
+  background-color: #c7c7c7;
+  border-radius: 50px;
+  transition: 0.1s ease-in-out;
+}
+.buttonOperator {
+  color:#ffa500;
+  border: 1px solid #EFEFEF;
+  line-height: 100px;
+  text-align: center;
+  font-size: 25px;
+  cursor: pointer;
+  font-weight:400;
+  font-size: 34px;
+  }
+.buttons {
+  display: grid;
+  border: 1px solid #999898;
+  border-bottom-right-radius: 26px;
+  border-bottom-left-radius: 26px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+input[swap="sci"]{
+  display: none;
+}
+input[second="sec"]{
+  font-weight: 600;
+}
+#scndBtn.buttons {
+  font-size:25px;
+  color:gray;
+}
+.buttonsSec {
+  font-weight:600;
+  font-size: 24px;
+  font-family: cursive;
+  display: grid;
+  border: 1px solid #999898;
+  border-bottom-right-radius: 26px;
+  border-bottom-left-radius: 26px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  color:black;
+}
+
+
+.buttonOperatorSci {
+  color: #999898;
+}
+.buttonsSci {
+  display: grid;
+  border: 1px solid #999898;
+  border-bottom-right-radius: 26px;
+  border-bottom-left-radius: 26px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.container {
+  max-width: 400px;
+  border-radius: 25px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.containerSci {
+  max-width: 500px;
+  border-radius: 25px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.divisionImg{
+  height:25px;
+}
+.swapImg {
+  height:41px;
+  margin-top:20px;
+}
+#allClear {
+  font-size: 25px;
+}
+#display {
+  text-align: right;
+  height: 70px;
+  line-height: 70px;
+  padding: 16px 8px;
+  font-size: 25px;
+  border-top-right-radius: 26px;
+  border-top-left-radius: 26px;
+  background-color: white;
+}
+#divisionBtn {
+  font-size: 34px;
+}
+#equalBtn {
+  border-radius: 50px;
+  background-color: #f36d00;
+  color: white;
+}
+#equalBtn:hover {
+  background-color: #d46000;
+}
+#numberEight{
+  font-weight:600;
+}
+#numberFour{
+  font-weight:600;
+}
+#numberFive{
+  font-weight:600;
+}
+#numberNine{
+  font-weight:600;
+}
+#numberOne {
+  font-weight:600;
+}
+#numberSeven{
+  font-weight:600;
+}
+#numberSix{
+  font-weight:600;
+}
+#numberThree{
+  font-weight:600;
+}
+#numberTwo{
+  font-weight: 600;
+}
+#numberZero{
+  font-weight: 600;
+}
+#percentageBtn {
+  font-size:25px;
+}
+#result {
+  text-align: right;
+  height: 70px;
+  line-height: 70px;
+  padding: 16px 8px;
+  font-size: 25px;
+  background-color: white;
+}
+#swapModeBtn {
+  border-radius: 50px;
+}
+
