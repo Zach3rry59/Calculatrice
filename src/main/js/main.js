@@ -101,6 +101,9 @@ btns.map((btn) => {
       case "scndBtn":
         second();
         break;
+      case "factorialBtn":
+        setDisplayResultat(getFactoriel());
+        break;
       case "clear":
         if (
           checkOperateur(
@@ -255,27 +258,6 @@ function removeDisplayText() {
 
 function getDisplayText() {
   return displayCalc.innerText;
-}
-
-//#endregion
-
-//#region Fonction du Resultat Text
-
-function setDisplayResultat(result) {
-  resultCalc.innerText = result;
-}
-
-function removeResultat() {
-  resultat = "";
-  resultCalc.innerText = "";
-}
-
-function setResultat(result) {
-  resultat = result;
-}
-
-function getResultat() {
-  return resultat;
 }
 
 //#endregion
@@ -503,3 +485,19 @@ function swapRadDeg() {
   }
 }
 
+function getFactoriel() {
+  let table = []; // initialise le tab
+  for(let valeur of getDisplayText()) { // pour chaque valeur dans le display
+    while (valeur > 1) {  {
+      table.push(valeur); // push les valeur dans le tab
+      Number(valeur);
+      valeur--;
+     }
+      }
+    }
+  let result = table.reduce(function(a,b){
+    return a*b;
+  });
+  
+  return result;
+}
