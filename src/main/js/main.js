@@ -6,7 +6,7 @@ let resultat = "0";
 let calcule = "";
 let tbl = false;
 let operateurs = ["+", "-", "*", "/", "%", "!", "."];
-let operateursSizeTwo = ["xY", "lg", "ln", "√x"];
+let operateursSizeTwo = ["xY", "lg", "ln", "√x","x3"];
 let operateursSizeThree = ["cos", "sin", "tan", "deg", "2nd", "1/x"];
 
 btns.map((btn) => {
@@ -487,17 +487,13 @@ function swapRadDeg() {
 
 function getFactoriel() {
   let table = []; // initialise le tab
-  for(let valeur of getDisplayText()) { // pour chaque valeur dans le display
-    while (valeur > 1) {  {
+  for(let valeur = getResultat();valeur >1 ; valeur--) { // pour chaque valeur dans le display
       table.push(valeur); // push les valeur dans le tab
       Number(valeur);
-      valeur--;
+      console.log(getResultat())
      }
-      }
-    }
   let result = table.reduce(function(a,b){
     return a*b;
   });
-  
   return result;
 }
