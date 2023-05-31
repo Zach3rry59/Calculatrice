@@ -5,7 +5,7 @@ let btns = Array.from(document.getElementsByClassName("button"));
 let resultat = "0";
 let calcule = "";
 let tbl = false;
-let operateurs = ["+", "-", "*", "/", "%", "xY", "lg", "ln", "√x", "!", "."];
+let operateurs = ["+", "-", "*", "/", "%", "!", "."];
 let operateursSizeTwo = ["xY", "lg", "ln", "√x"];
 let operateursSizeThree = ["cos", "sin", "tan", "deg", "2nd", "1/x"];
 
@@ -81,6 +81,12 @@ btns.map((btn) => {
         swap();
         break;
 
+      case "onX": // appelle et gere l'affichage de la function 1/x
+        setDisplayText(onX());
+        break;  
+      case "exponentiationBtn" : // appelle et gere l'affichage de la function 1/x
+        setDisplayText(xY());
+        break;
       case "allClear":
         removeDisplayText();
         removeCalcule();
@@ -461,21 +467,30 @@ function xY() {
   }
   let valeur1 = table[0]; // initialise les deux var
   let valeur2 = table[1]; //
-  if (valeur1 != 0 && valeur2 != 0) { // les deux variables ne peuvent etre nulles étant des puissances
+  if (valeur1 != 0 && valeur2 != 0 && !checkOperateur(valeur1) && !checkOperateur(valeur2)) { // les deux variables ne peuvent etre nulles étant des puissances
+    let resultat="";
+    resultat = getDisplayText().sliceReplace(getDisplayText().length -2,getDisplayText().length, valeur1 + "^" + valeur2)
     setDisplayResultat(Math.pow(valeur1,valeur2)); // affiche le resultat xY
+    return resultat;
   }
 }
 
 // FONCTIONNE mais a modif pour ne pas afficher le 1/x lors du clique
 function onX() { 
   let table = []; // initialise tab
+  let table2 = []
   for(let valeurs of getDisplayText()) { // pour chaque valeur dans le display
     table.push(valeurs); // push les valeur dans le tab
+    table2 = table.join('');
     Number.valeurs; // transforme le string en number
   }
-  let valeur1 = table[0]; // initialise la variable
-  if (valeur1 != 0 ) { // la variable ne peut etre nul ( division)
+  let valeur1 = table2; // initialise la variable
+  
+  if (valeur1 != 0 && !checkOperateur(valeur1)) { // la variable ne peut etre nul ( division)
+    let resultat = "";
+    resultat = getDisplayText().sliceReplace(getDisplayText().length -3, getDisplayText().length, "1/" + valeur1);
     setDisplayResultat(1/valeur1); // affiche le resultat 
+    return resultat;
   }
 }
 
@@ -487,3 +502,4 @@ function swapRadDeg() {
     radDegBtn.value = "rad";
   }
 }
+
