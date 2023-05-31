@@ -1,6 +1,7 @@
 let displayCalc = document.getElementById("display");
 let resultCalc = document.getElementById("result");
 let btns = Array.from(document.getElementsByClassName("button"));
+const scndBtn = document.getElementById("scndBtn");
 
 let resultat = "0";
 let calcule = "";
@@ -9,70 +10,176 @@ let operateurs = ["+", "-", "*", "/", "%", "xY", "lg", "ln", "√x", "!", "."];
 let operateursSizeTwo = ["xY", "lg", "ln", "√x"];
 let operateursSizeThree = ["cos", "sin", "tan", "deg", "2nd", "1/x"];
 
+window.addEventListener(
+  "keydown",
+  function (event) {
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    switch (event.key) {
+      case "Enter":
+        setDisplayText(getResultat());
+        setCalcule(getResultat());
+        break;
+
+      case "Escape":
+        allClear();
+        break;
+      case "(":
+        if (!checkDoubleElement(getDisplayText(), "(")) {
+          let editText = checkDoubleOperateur(getDisplayText(), "(");
+          setDisplayText(editText);
+          setCalcule(editText);
+        }
+        fun();
+        break;
+      case ")":
+        if (!checkDoubleElement(getDisplayText(), ")")) {
+          let editText = checkDoubleOperateur(getDisplayText(), ")");
+          setDisplayText(editText);
+          setCalcule(editText);
+        }
+        fun();
+        break;
+
+      case "Backspace":
+        clear();
+        break;
+
+      case "Tab":
+        swap();
+        break;
+
+      case ".":
+        if (!checkDoubleElement(getDisplayText(), ".")) {
+          let editText = checkDoubleOperateur(getDisplayText(), ".");
+          setDisplayText(editText);
+          setCalcule(editText);
+        }
+        fun();
+        break;
+
+      case "+":
+        if (!checkDoubleElement(getDisplayText(), "+")) {
+          let editText = checkDoubleOperateur(getDisplayText(), "+");
+          setDisplayText(editText);
+          setCalcule(editText);
+        }
+        fun();
+        break;
+      case "-":
+        if (!checkDoubleElement(getDisplayText(), "-")) {
+          let editText = checkDoubleOperateur(getDisplayText(), "-");
+          setDisplayText(editText);
+          setCalcule(editText);
+        }
+        fun();
+        break;
+      case "*":
+        if (!checkDoubleElement(getDisplayText(), "*")) {
+          let editText = checkDoubleOperateur(getDisplayText(), "*");
+          setDisplayText(editText);
+          setCalcule(editText);
+        }
+        fun();
+        break;
+      case "/":
+        if (!checkDoubleElement(getDisplayText(), "/")) {
+          let editText = checkDoubleOperateur(getDisplayText(), "/");
+          setDisplayText(editText);
+          setCalcule(editText);
+        }
+        fun();
+        break;
+      case "0":
+        setDisplayText(getDisplayText() + "0");
+        setCalcule(getCalcule() + "0");
+        fun();
+        break;
+      case "1":
+        setDisplayText(getDisplayText() + "1");
+        setCalcule(getCalcule() + "1");
+        fun();
+        break;
+      case "2":
+        setDisplayText(getDisplayText() + "2");
+        setCalcule(getCalcule() + "2");
+        fun();
+        break;
+      case "3":
+        setDisplayText(getDisplayText() + "3");
+        setCalcule(getCalcule() + "3");
+        fun();
+        break;
+      case "4":
+        setDisplayText(getDisplayText() + "4");
+        setCalcule(getCalcule() + "4");
+        fun();
+        break;
+      case "5":
+        setDisplayText(getDisplayText() + "5");
+        setCalcule(getCalcule() + "5");
+        fun();
+        break;
+      case "6":
+        setDisplayText(getDisplayText() + "6");
+        setCalcule(getCalcule() + "6");
+        fun();
+        break;
+      case "7":
+        setDisplayText(getDisplayText() + "7");
+        setCalcule(getCalcule() + "7");
+        fun();
+        break;
+      case "8":
+        setDisplayText(getDisplayText() + "8");
+        setCalcule(getCalcule() + "8");
+        fun();
+        break;
+      case "9":
+        setDisplayText(getDisplayText() + "9");
+        setCalcule(getCalcule() + "9");
+        fun();
+        break;
+      default:
+        return; // Quit when this doesn't handle the key event.
+    }
+
+    // Cancel the default action to avoid it being handled twice
+    event.preventDefault();
+  },
+  true
+);
+
 btns.map((btn) => {
   btn.addEventListener("click", (e) => {
     switch (e.target.id) {
       default:
-        const scndBtn = document.getElementById("scndBtn");
         if (!checkDoubleElement(getDisplayText(), e.target.value)) {
           let editText = checkDoubleOperateur(getDisplayText(), e.target.value);
           setDisplayText(editText);
           setCalcule(editText);
-          setCalcule(getCalcule().split(" "));
-
-          if (getCalcule()[1]) {
-            setDisplayText(getDisplayText() + "(");
-            setDisplayText(getDisplayText().replace(" ", ""));
-          }
-          setCalcule(getCalcule().join(""));
         }
         try {
-          setResultat("" + calcul(addOperator(replacer(getCalcule()))));
-          if (getResultat() == "Infinity") {
-            setResultat("Impossible de diviser par 0");
-            setDisplayResultat(getResultat());
-          } else if (scndBtn.classList.contains("buttonsSec") && getResultat() === "NaN"){
-            setResultat("Erreur");
-            setDisplayResultat(getResultat());
-          } else if (getResultat() == "NaN") {
-            setResultat(" ");
-            setDisplayResultat(getResultat());
-          } else if (getResultat().includes("function")) {
-            setResultat(" ");
-            setDisplayResultat(getResultat());
-          } else if (getResultat() == "undefined") {
-            setResultat("Erreur");
-            setDisplayResultat(getResultat());
-          }  else {
-            setDisplayResultat(getResultat());
-          }
+          fun();
         } catch (error) {
           errorStr = "" + error;
           if (errorStr.includes(")")) {
             setCalcule(getCalcule() + ")");
           }
           try {
-            setResultat("" + calcul(addOperator(replacer(getCalcule()))));
-            if (getResultat() == "Infinity") {
-              setResultat("Impossible de diviser par 0");
-              setDisplayResultat(getResultat());
-            } else if (scndBtn.classList.contains("buttonsSec") && getResultat() === "NaN"){
-              setResultat("Erreur");
-              setDisplayResultat(getResultat());
-            } else if (getResultat() == "NaN") {
-              setResultat(" ");
-              setDisplayResultat(getResultat());
-            } else if (getResultat().includes("function")) {
-              setResultat(" ");
-              setDisplayResultat(getResultat());
-            } else if (getResultat() == "undefined") {
-              setResultat("Erreur");
-              setDisplayResultat(getResultat());
-            }  else {
-              setDisplayResultat(getResultat());
-            }
+            fun();
           } catch (error) {
-            console.log("Ceci n'est pas une erreur");
+            errorStr = "" + error;
+            if (errorStr.includes(")")) {
+              setCalcule(getCalcule() + ")");
+            }
+            try {
+              fun();
+            } catch (error) {
+              console.log("aucune erreur rajoute une parenthèse");
+            }
           }
         }
         break;
@@ -82,9 +189,7 @@ btns.map((btn) => {
         break;
 
       case "allClear":
-        removeDisplayText();
-        removeCalcule();
-        removeResultat();
+        allClear();
         break;
 
       case "equalBtn":
@@ -96,34 +201,76 @@ btns.map((btn) => {
         second();
         break;
       case "clear":
-        if (
-          checkOperateur(
-            getDisplayText().substring(
-              getDisplayText().length - 2,
-              getDisplayText().length
-            )
-          )
-        ) {
-          setDisplayText(getDisplayText().slice(0, -2));
-          setCalcule(getCalcule().slice(0, -2));
-        } else if (
-          checkOperateur(
-            getDisplayText().substring(
-              getDisplayText().length - 3,
-              getDisplayText().length
-            )
-          )
-        ) {
-          setDisplayText(getDisplayText().slice(0, -3));
-          setCalcule(getCalcule().slice(0, -3));
-        } else {
-          setDisplayText(getDisplayText().slice(0, -1));
-          setCalcule(getCalcule().slice(0, -1));
-        }
+        clear();
         break;
     }
   });
 });
+
+function allClear() {
+  removeDisplayText();
+  removeCalcule();
+  removeResultat();
+}
+
+function clear() {
+  if (
+    checkOperateur(
+      getDisplayText().substring(
+        getDisplayText().length - 2,
+        getDisplayText().length
+      )
+    )
+  ) {
+    setDisplayText(getDisplayText().slice(0, -2));
+    setCalcule(getCalcule().slice(0, -2));
+  } else if (
+    checkOperateur(
+      getDisplayText().substring(
+        getDisplayText().length - 3,
+        getDisplayText().length
+      )
+    )
+  ) {
+    setDisplayText(getDisplayText().slice(0, -3));
+    setCalcule(getCalcule().slice(0, -3));
+  } else {
+    setDisplayText(getDisplayText().slice(0, -1));
+    setCalcule(getCalcule().slice(0, -1));
+  }
+}
+function fun() {
+  setCalcule(getCalcule().split(" "));
+
+  if (getCalcule()[1]) {
+    setDisplayText(getDisplayText() + "(");
+    setDisplayText(getDisplayText().replace(" ", ""));
+  }
+  setCalcule(getCalcule().join(""));
+
+  setResultat("" + calcul(addOperator(replacer(getCalcule()))));
+  if (getResultat() == "Infinity") {
+    setResultat("Impossible de diviser par 0");
+    setDisplayResultat(getResultat());
+  } else if (
+    scndBtn.classList.contains("buttonsSec") &&
+    getResultat() === "NaN"
+  ) {
+    setResultat("Erreur");
+    setDisplayResultat(getResultat());
+  } else if (getResultat() == "NaN") {
+    setResultat(" ");
+    setDisplayResultat(getResultat());
+  } else if (getResultat().includes("function")) {
+    setResultat(" ");
+    setDisplayResultat(getResultat());
+  } else if (getResultat() == "undefined") {
+    setResultat("Erreur");
+    setDisplayResultat(getResultat());
+  } else {
+    setDisplayResultat(getResultat());
+  }
+}
 
 function addOperator(str) {
   let strArray = str.split("");
@@ -132,11 +279,15 @@ function addOperator(str) {
     for (let i = 0; i < strArray.length; i++) {
       if (strArray[i] === "M" && strArray[i - 1] === number) {
         strArray[i] = "*M";
-        str = strArray.join('')
+        str = strArray.join("");
       }
     }
   }
-  return str
+  return str;
+}
+
+function dTrig(trigFunc, angle) {
+  return trigFunc((angle * Math.PI) / 180);
 }
 
 /**
@@ -148,7 +299,7 @@ function addOperator(str) {
  * constants have been replaced with their corresponding JavaScript Math object methods or properties.
  */
 function replacer(str) {
-  const scndBtn = document.getElementById("scndBtn");
+  const degRadBtn = document.getElementById("degRadBtn");
   if (scndBtn.classList.contains("buttonsSec")) {
     var pairs = {
       acos: "Math.acos",
@@ -160,7 +311,21 @@ function replacer(str) {
       e: "Math.E",
       "√": "Math.sqrt",
     };
-  } else
+  } else if (
+    !scndBtn.classList.contains("buttonsSec") &&
+    degRadBtn.value == "deg"
+  ) {
+    var pairs = {
+      cos: "dTrig(Math.cos,",
+      sin: "dTrig(Math.sin,",
+      tan: "dTrig(Math.tan,",
+      lg: "Math.log10",
+      ln: "Math.log",
+      π: "Math.PI",
+      e: "Math.E",
+      "√": "Math.sqrt",
+    };
+  } else {
     var pairs = {
       cos: "Math.cos",
       sin: "Math.sin",
@@ -171,7 +336,8 @@ function replacer(str) {
       e: "Math.E",
       "√": "Math.sqrt",
     };
-  
+  }
+
   Object.keys(pairs).forEach(function (key) {
     str = str.split(key).join(pairs[key]);
   });
@@ -185,8 +351,6 @@ function calcul(number) {
       test = number.charAt(0);
       if (test == "*" || test == "/") {
         setDisplayText("");
-      } else {
-        number = number.slice(0, -1);
       }
     }
   } else {
@@ -197,6 +361,7 @@ function calcul(number) {
       resultat = eval(number);
     }
   }
+  resultat = eval(number);
   return resultat;
 }
 
@@ -442,40 +607,48 @@ function second() {
   }
 }
 
-// A finir 
+// A finir
 function percentage() {
   let tabTest = [];
-  for(let valeurs of getDisplayText()) { // prend l'input et le met dans un tableau
-      if (valeurs != '+' && valeurs != '/' && valeurs != '*' && valeurs != '-') {
-        tabTest.push(valeurs.split(','));
-      } 
-        console.log("tabtest ::: " , tabTest)            
+  for (let valeurs of getDisplayText()) {
+    // prend l'input et le met dans un tableau
+    if (valeurs != "+" && valeurs != "/" && valeurs != "*" && valeurs != "-") {
+      tabTest.push(valeurs.split(","));
+    }
+    console.log("tabtest ::: ", tabTest);
   }
 }
 
 function xY() {
-  let table = []; // initialise tab
-  for(let valeurs of getDisplayText()) { // pour chaque valeur dans le display
-    table.push(valeurs); // push les valeur dans le tab
-    Number.valeurs; // transforme le string en number
-  }
-  let valeur1 = table[0]; // initialise les deux var
-  let valeur2 = table[1]; //
-  if (valeur1 != 0 && valeur2 != 0) { // les deux variables ne peuvent etre nulles étant des puissances
-    setDisplayResultat(Math.pow(valeur1,valeur2)); // affiche le resultat xY
-  }
+  const equalBtn = document.getElementById("equalBtn");
+  let a = getResultat();
+  setDisplayResultat(a + "^");
+  setDisplayText("");
+  setCalcule("");
+  let c;
+  equalBtn.addEventListener(
+    "click",
+    (c = function () {
+      let b = getResultat();
+      setDisplayText(a + "^" + b);
+      setDisplayResultat(Math.pow(a, b));
+      setResultat(Math.pow(a, b));
+      this.removeEventListener("click", c);
+    })
+  );
 }
-
 // FONCTIONNE mais a modif pour ne pas afficher le 1/x lors du clique
-function onX() { 
+function onX() {
   let table = []; // initialise tab
-  for(let valeurs of getDisplayText()) { // pour chaque valeur dans le display
+  for (let valeurs of getDisplayText()) {
+    // pour chaque valeur dans le display
     table.push(valeurs); // push les valeur dans le tab
     Number.valeurs; // transforme le string en number
   }
   let valeur1 = table[0]; // initialise la variable
-  if (valeur1 != 0 ) { // la variable ne peut etre nul ( division)
-    setDisplayResultat(1/valeur1); // affiche le resultat 
+  if (valeur1 != 0) {
+    // la variable ne peut etre nul ( division)
+    setDisplayResultat(1 / valeur1); // affiche le resultat
   }
 }
 
