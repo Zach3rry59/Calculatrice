@@ -6,7 +6,7 @@ const scndBtn = document.getElementById("scndBtn");
 let resultat = "0";
 let calcule = "";
 let tbl = false;
-let operateurs = ["+", "-", "*", "/", "%", "xY", "lg", "ln", "√x", "!", "."];
+let operateurs = ["+", "-", "*", "/", "%", "!", "."];
 let operateursSizeTwo = ["xY", "lg", "ln", "√x"];
 let operateursSizeThree = ["cos", "sin", "tan", "deg", "2nd", "1/x"];
 
@@ -188,6 +188,12 @@ btns.map((btn) => {
         swap();
         break;
 
+      case "onX": // appelle et gere l'affichage de la function 1/x
+        setDisplayText(onX());
+        break;  
+      case "exponentiationBtn" : // appelle et gere l'affichage de la function 1/x
+        setDisplayText(xY());
+        break;
       case "allClear":
         allClear();
         break;
@@ -199,6 +205,9 @@ btns.map((btn) => {
 
       case "scndBtn":
         second();
+        break;
+      case "factorialBtn":
+        setDisplayResultat(getFactoriel());
         break;
       case "clear":
         clear();
@@ -418,27 +427,6 @@ function getDisplayText() {
 
 //#endregion
 
-//#region Fonction du Resultat Text
-
-function setDisplayResultat(result) {
-  resultCalc.innerText = result;
-}
-
-function removeResultat() {
-  resultat = "";
-  resultCalc.innerText = "";
-}
-
-function setResultat(result) {
-  resultat = result;
-}
-
-function getResultat() {
-  return resultat;
-}
-
-//#endregion
-
 //#region Fonction Calcule
 
 function setCalcule(calcul) {
@@ -640,15 +628,19 @@ function xY() {
 // FONCTIONNE mais a modif pour ne pas afficher le 1/x lors du clique
 function onX() {
   let table = []; // initialise tab
-  for (let valeurs of getDisplayText()) {
-    // pour chaque valeur dans le display
+  let table2 = []
+  for(let valeurs of getDisplayText()) { // pour chaque valeur dans le display
     table.push(valeurs); // push les valeur dans le tab
+    table2 = table.join('');
     Number.valeurs; // transforme le string en number
   }
-  let valeur1 = table[0]; // initialise la variable
-  if (valeur1 != 0) {
-    // la variable ne peut etre nul ( division)
-    setDisplayResultat(1 / valeur1); // affiche le resultat
+  let valeur1 = table2; // initialise la variable
+  
+  if (valeur1 != 0 && !checkOperateur(valeur1)) { // la variable ne peut etre nul ( division)
+    let resultat = "";
+    resultat = getDisplayText().sliceReplace(getDisplayText().length -3, getDisplayText().length, "1/" + valeur1);
+    setDisplayResultat(1/valeur1); // affiche le resultat 
+    return resultat;
   }
 }
 
@@ -659,4 +651,21 @@ function swapRadDeg() {
   } else {
     radDegBtn.value = "rad";
   }
+}
+
+function getFactoriel() {
+  let table = []; // initialise le tab
+  for(let valeur of getDisplayText()) { // pour chaque valeur dans le display
+    while (valeur > 1) {  {
+      table.push(valeur); // push les valeur dans le tab
+      Number(valeur);
+      valeur--;
+     }
+      }
+    }
+  let result = table.reduce(function(a,b){
+    return a*b;
+  });
+  
+  return result;
 }
